@@ -417,67 +417,54 @@ h1.hero-title {
 
 /* ---- WAVE SECTION ---- */
 #panel-wave {
-  width: 100vw;
+  width: 150vw;
+  background: var(--bg);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: 100vw;
+}
+.marquee-container {
   position: relative;
-  overflow: hidden;
-  padding: 0 60px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
 }
 .wave-phrase {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(42px, 6vw, 86px);
+  font-size: clamp(40px, 8vw, 110px);
   color: var(--chalk);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0;
-  line-height: 1.1;
-  margin-bottom: 60px;
   filter: url(#chalk);
+  display: flex;
+  white-space: nowrap;
 }
-.wave-word { display: inline-flex; margin-right: 0.22em; overflow: visible; }
-.wave-char {
-  display: inline-block;
-  will-change: transform;
-  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+.wave-char { display: inline-block; will-change: transform; }
+.chalk-arrow-element { position: absolute; pointer-events: none; }
+#arrow-middle {
+  top: -160px;
+  left: 22%;
+  width: 420px;
+  height: 130px;
 }
-.chalk-lines-svg {
-  width: 100%;
-  max-width: 600px;
-  overflow: visible;
+#arrow-end {
+  right: -340px;
+  top: 50%;
+  width: 300px;
+  height: 100px;
+  transform: translateY(-55%);
 }
-.chalk-line {
+.draw-path {
   fill: none;
-  stroke: rgba(240,234,224,0.5);
-  stroke-width: 2;
+  stroke: var(--chalk);
+  stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  transition: stroke-dashoffset 0s;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  transition: stroke-dashoffset 1.6s ease-out;
 }
-.chalk-line.drawing {
-  transition: stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1);
-  stroke-dashoffset: 0;
-}
-.arrow-line {
-  fill: none;
-  stroke: rgba(240,234,224,0.6);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 200;
-  stroke-dashoffset: 200;
-  transition: stroke-dashoffset 0s;
-}
-.arrow-line.drawing {
-  transition: stroke-dashoffset 0.8s ease 1.2s;
-  stroke-dashoffset: 0;
-}
+.draw-path.active { stroke-dashoffset: 0; }
 
 /* ---- WORKS ---- */
 #panel-works { width: 155vw; position: relative; }
@@ -761,6 +748,39 @@ h1.hero-title {
     </div>
   </div>
 
+  <!-- WAVE -->
+  <div class="panel" id="panel-wave">
+    <div class="marquee-container" id="marquee-holder">
+      <svg id="arrow-middle" class="chalk-arrow-element" viewBox="0 0 680 200" preserveAspectRatio="xMidYMid meet">
+        <path class="draw-path" d="
+          M 80,185
+          C 30,185 10,100 60,45
+          C 110,-10 210,5 250,55
+          C 290,105 270,165 248,172
+          C 226,179 218,162 240,115
+          C 262,68 320,20 420,30
+          C 520,40 580,120 575,172
+          M 562,158 L 575,172 L 562,186
+        "/>
+      </svg>
+      <div class="wave-phrase" id="wave-phrase"></div>
+      <svg id="arrow-end" class="chalk-arrow-element" viewBox="0 0 520 160" preserveAspectRatio="xMidYMid meet">
+        <path class="draw-path" d="
+          M 5,85
+          C 35,85 62,92 90,88
+          C 118,84 142,70 162,80
+          C 182,90 185,116 174,124
+          C 163,132 140,124 132,110
+          C 124,96 134,74 162,80
+          C 190,86 222,90 252,84
+          C 278,78 300,64 324,46
+          C 348,28 372,12 398,4
+          M 384,0 L 398,4 L 390,18
+        "/>
+      </svg>
+    </div>
+  </div>
+
 <div class="panel" id="panel-works">
     <h2 class="works-title panel-reveal">Works</h2>
 
@@ -837,15 +857,7 @@ h1.hero-title {
     </div>
   </div>
 
-  <!-- WAVE -->
-  <div class="panel" id="panel-wave">
-    <div class="wave-phrase" id="wave-phrase"></div>
-    <svg class="chalk-lines-svg" id="chalk-lines-svg" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="chalk-line" id="cline1" d="M30,30 Q120,15 200,35 Q280,55 360,25 Q440,5 520,30"/>
-      <path class="chalk-line" id="cline2" d="M60,65 Q150,85 240,60 Q330,40 420,70 Q480,85 540,65"/>
-      <path class="arrow-line" id="arrow1" d="M270,100 Q290,108 310,100 M298,92 L310,100 L298,108"/>
-    </svg>
-  </div>
+
 
 <div class="panel" id="panel-about">
     <div class="about-left">
@@ -961,7 +973,7 @@ window.addEventListener('touchmove',e=>{
 
 function getPanelX(id){ const el=document.getElementById(id); return el?el.offsetLeft:0; }
 
-const panelIds = ['panel-hero','panel-works','panel-wave','panel-about','panel-contact'];
+const panelIds = ['panel-hero','panel-wave','panel-works','panel-about','panel-contact'];
 const marqueeEl = document.getElementById('marquee-horiz');
 let chalkLinesDrawn = false;
 let waveActive = false;
@@ -975,6 +987,7 @@ let waveStart = 0;
   updateProgress();
   updateNav();
   checkPanelReveal();
+  updateWaveEffect();
   updateMarquee();
   requestAnimationFrame(animScroll);
 })();
@@ -1054,7 +1067,7 @@ function checkPanelReveal(){
 document.querySelectorAll('.nav-circle').forEach(nc=>{
   nc.addEventListener('click',()=>{
     const idx=parseInt(nc.dataset.panel);
-    const targets=['panel-hero','panel-works','panel-wave','panel-about','panel-contact'];
+    const targets=['panel-hero','panel-wave','panel-works','panel-about','panel-contact'];
     const id=targets[idx];
     if(id) targetX=Math.max(0,getPanelX(id));
   });
@@ -1171,59 +1184,49 @@ function initHero() {
 
 runSplash();
 
-// WAVE TEXT
-const wavePhrase = 'Curiosity leads me. Design is where I land.';
-const wavePhraseEl = document.getElementById('wave-phrase');
-if(wavePhraseEl) {
-  wavePhrase.split(' ').forEach(word => {
-    const wordSpan = document.createElement('span');
-    wordSpan.className = 'wave-word';
-    word.split('').forEach((ch, ci) => {
-      const s = document.createElement('span');
-      s.className = 'wave-char';
-      s.textContent = ch;
-      wordSpan.appendChild(s);
-    });
-    wavePhraseEl.appendChild(wordSpan);
-    const space = document.createElement('span');
-    space.style.cssText = 'display:inline-block;width:0.22em';
-    wavePhraseEl.appendChild(space);
-  });
+// WAVE TEXT - init chars
+const waveTarget = document.getElementById('wave-phrase');
+const textStr = 'Curiosity leads me. Design is where I land.';
+if(waveTarget) {
+  waveTarget.innerHTML = textStr.split('').map(ch =>
+    `<span class="wave-char">${ch === ' ' ? '&nbsp;' : ch}</span>`
+  ).join('');
 }
 
-// Wave animation - time-based oscillation, settles on scroll
-function animWave(ts) {
-  if(!waveActive) { requestAnimationFrame(animWave); return; }
+// WAVE effect - scroll scrubbed marquee
+function updateWaveEffect() {
+  const panel = document.getElementById('panel-wave');
+  const holder = document.getElementById('marquee-holder');
+  const paths = document.querySelectorAll('.draw-path');
+  if(!panel || !holder) return;
+
+  const panelX = panel.offsetLeft;
+  const panelWidth = panel.offsetWidth;
+  const screenWidth = window.innerWidth;
+
+  let progress = (currentX - (panelX - screenWidth)) / (panelWidth + screenWidth);
+  progress = Math.max(0, Math.min(1, progress));
+
+  // Horizontal scrub - text moves right to left
+  const moveX = progress * -1500;
+  holder.style.transform = `translateX(${moveX}px)`;
+
+  // Individual letter tumble
   const chars = document.querySelectorAll('.wave-char');
-  const t = (ts - waveStart) / 1000;
-  const wavePanel = document.getElementById('panel-wave');
-  const panelX = wavePanel ? wavePanel.offsetLeft : 0;
-  // settle progress: how much of wave has scrolled into/through view
-  const progress = Math.max(0, Math.min(1, (currentX - panelX + window.innerWidth) / (window.innerWidth * 1.2)));
-  const amplitude = waveSettled ? 0 : Math.max(0, 40 * (1 - progress * 1.4));
   chars.forEach((ch, i) => {
-    const wave = Math.sin(i * 0.45 + t * 2.8) * amplitude;
-    ch.style.transform = `translateY(${wave}px)`;
+    const offset = Math.sin(progress * 10 + i * 0.2) * 15;
+    const rotate = Math.cos(progress * 5 + i * 0.1) * 10;
+    ch.style.transform = `translateY(${offset}px) rotate(${rotate}deg)`;
   });
-  if(amplitude < 1) waveSettled = true;
-  requestAnimationFrame(animWave);
-}
-requestAnimationFrame(animWave);
 
-// CHALK LINES on wave panel scroll
-function checkChalkLines() {
-  const wavePanel = document.getElementById('panel-wave');
-  if(!wavePanel || chalkLinesDrawn) return;
-  const panelX = wavePanel.offsetLeft;
-  if(currentX >= panelX - window.innerWidth * 0.3) {
-    chalkLinesDrawn = true;
-    waveActive = true;
-    waveStart = performance.now();
-    setTimeout(()=>{ document.getElementById('cline1')?.classList.add('drawing'); }, 200);
-    setTimeout(()=>{ document.getElementById('cline2')?.classList.add('drawing'); }, 600);
-    setTimeout(()=>{ document.getElementById('arrow1')?.classList.add('drawing'); }, 1400);
+  // Trigger arrows
+  if(progress > 0.3) {
+    paths.forEach(p => p.classList.add('active'));
   }
 }
+
+// CHALK LINES check (now handled by updateWaveEffect)
+function checkChalkLines() {}
 
 // CHECKLIST
 const ilHint = document.getElementById('il-hint');
