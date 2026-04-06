@@ -163,41 +163,46 @@ body.cursor-pill #cursor-ring { opacity: 0; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.9s ease;
+  transition: opacity 1s ease;
 }
 #splash.hide { opacity: 0; pointer-events: none; }
 .splash-text {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(36px, 6vw, 88px);
+  font-size: clamp(40px, 6.5vw, 92px);
   color: var(--chalk);
   text-align: center;
-  line-height: 1.15;
+  line-height: 1.2;
   filter: url(#chalk);
   padding: 0 48px;
+  position: relative;
 }
-.splash-word {
+.splash-char {
   display: inline-block;
   opacity: 0;
-  margin-right: 0.22em;
+  position: relative;
 }
-.splash-word.written {
-  animation: chalk-write 0.4s cubic-bezier(0.2,0.8,0.4,1) forwards;
+.splash-char.space { width: 0.28em; display: inline-block; opacity: 1; }
+.splash-char.drawn {
+  animation: char-chalk 0.18s ease-out forwards;
 }
-@keyframes chalk-write {
-  0%   { opacity:0; transform: translateY(16px) rotate(-2deg) scaleX(0.8); }
-  55%  { opacity:1; transform: translateY(-3px) rotate(0.6deg) scaleX(1.03); }
-  100% { opacity:1; transform: translateY(0) rotate(0deg) scaleX(1); }
+@keyframes char-chalk {
+  0%   { opacity: 0; transform: translateY(10px) rotate(-4deg) scaleX(0.5); }
+  60%  { opacity: 1; transform: translateY(-2px) rotate(1deg) scaleX(1.04); }
+  100% { opacity: 1; transform: translateY(0) rotate(0deg) scaleX(1); }
 }
-.splash-cursor {
-  display: inline-block;
-  width: 3px; height: 0.85em;
-  background: var(--chalk);
-  margin-left: 3px;
-  vertical-align: middle;
-  animation: blink 0.55s step-end infinite;
+#chalk-tip {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: rgba(240,234,224,0.85);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%,-50%);
+  transition: left 0.04s linear, top 0.04s linear;
+  box-shadow: 0 0 8px rgba(240,234,224,0.6);
+  display: none;
 }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
 h1.hero-title {
   font-family: var(--font-display);
@@ -409,6 +414,71 @@ h1.hero-title {
 .cta-connect.show { opacity: 1; transform: scale(1); }
 .cta-connect:hover { border-color: var(--chalk); }
 
+
+/* ---- WAVE SECTION ---- */
+#panel-wave {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 0 60px;
+}
+.wave-phrase {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(42px, 6vw, 86px);
+  color: var(--chalk);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0;
+  line-height: 1.1;
+  margin-bottom: 60px;
+  filter: url(#chalk);
+}
+.wave-word { display: inline-flex; margin-right: 0.22em; overflow: visible; }
+.wave-char {
+  display: inline-block;
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.chalk-lines-svg {
+  width: 100%;
+  max-width: 600px;
+  overflow: visible;
+}
+.chalk-line {
+  fill: none;
+  stroke: rgba(240,234,224,0.5);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 0s;
+}
+.chalk-line.drawing {
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1);
+  stroke-dashoffset: 0;
+}
+.arrow-line {
+  fill: none;
+  stroke: rgba(240,234,224,0.6);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  transition: stroke-dashoffset 0s;
+}
+.arrow-line.drawing {
+  transition: stroke-dashoffset 0.8s ease 1.2s;
+  stroke-dashoffset: 0;
+}
+
 /* ---- WORKS ---- */
 #panel-works { width: 155vw; position: relative; }
 .works-title {
@@ -615,14 +685,9 @@ h1.hero-title {
 
 <!-- SPLASH SCREEN -->
 <div id="splash">
-  <div class="splash-text" id="splash-text">
-    <span class="splash-word" id="sw0">welcome</span>
-    <span class="splash-word" id="sw1">to</span>
-    <span class="splash-word" id="sw2">my</span>
-    <br>
-    <span class="splash-word" id="sw3">playground</span><span class="splash-cursor" id="splash-cursor"></span>
-  </div>
+  <div class="splash-text" id="splash-text"><span class="splash-char" id="sc0" data-ci="0">w</span><span class="splash-char" id="sc1" data-ci="1">e</span><span class="splash-char" id="sc2" data-ci="2">l</span><span class="splash-char" id="sc3" data-ci="3">c</span><span class="splash-char" id="sc4" data-ci="4">o</span><span class="splash-char" id="sc5" data-ci="5">m</span><span class="splash-char" id="sc6" data-ci="6">e</span><span class="splash-char space" data-ci="7"> </span><span class="splash-char" id="sc8" data-ci="8">t</span><span class="splash-char" id="sc9" data-ci="9">o</span><span class="splash-char space" data-ci="10"> </span><span class="splash-char" id="sc11" data-ci="11">m</span><span class="splash-char" id="sc12" data-ci="12">y</span><br><span class="splash-char" id="sc13" data-ci="13">p</span><span class="splash-char" id="sc14" data-ci="14">l</span><span class="splash-char" id="sc15" data-ci="15">a</span><span class="splash-char" id="sc16" data-ci="16">y</span><span class="splash-char" id="sc17" data-ci="17">g</span><span class="splash-char" id="sc18" data-ci="18">r</span><span class="splash-char" id="sc19" data-ci="19">o</span><span class="splash-char" id="sc20" data-ci="20">u</span><span class="splash-char" id="sc21" data-ci="21">n</span><span class="splash-char" id="sc22" data-ci="22">d</span></div>
 </div>
+<div id="chalk-tip"></div>
 <div id="progress-bar"><div id="progress-fill"></div></div>
 
 <svg width="0" height="0" style="position:absolute">
@@ -656,11 +721,11 @@ h1.hero-title {
   </div>
   <div class="nav-circle" data-panel="1">
     <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" class="nc-path" stroke="var(--c-orange)" stroke-width="2"/></svg>
-    <span class="nav-label">About</span>
+    <span class="nav-label">Works</span>
   </div>
   <div class="nav-circle" data-panel="2">
     <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" class="nc-path" stroke="var(--c-yellow)" stroke-width="2"/></svg>
-    <span class="nav-label">Works</span>
+    <span class="nav-label">About</span>
   </div>
   <div class="nav-circle" data-panel="3">
     <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" class="nc-path" stroke="var(--c-blue)" stroke-width="2"/></svg>
@@ -669,9 +734,7 @@ h1.hero-title {
 </nav>
 
 <div id="scroll-container">
-
-  <!-- HERO -->
-  <div class="panel" id="panel-hero">
+<div class="panel" id="panel-hero">
     <div style="position:absolute;top:-60px;left:-60px;pointer-events:none;opacity:0;transition:opacity 1s;" id="dblob1">
       <svg width="300" height="300" viewBox="0 0 300 300"><ellipse cx="150" cy="150" rx="120" ry="110" fill="none" stroke="var(--c-red)" stroke-width="1.5" opacity="0.4"/></svg>
     </div>
@@ -680,14 +743,11 @@ h1.hero-title {
     </div>
     <div id="hero-circles"></div>
     <div id="hero-content">
-      <h1 class="hero-title">
-        <span class="hero-line"><span class="hero-line-inner" id="hl0">welcome to my playground</span></span>
-      </h1>
-      <p class="hero-name"><span class="hero-line"><span class="hero-line-inner" id="hl1">Camille<br>Cong-Perret</span></span></p>
-      <p class="hero-role"><span class="hero-line"><span class="hero-line-inner" id="hl2">Product Designer</span></span></p>
+      <p class="hero-name"><span class="hero-line"><span class="hero-line-inner" id="hl0">Camille<br>Cong-Perret</span></span></p>
+      <p class="hero-role"><span class="hero-line"><span class="hero-line-inner" id="hl1">Product Designer</span></span></p>
       <p class="hero-phrase">
         <span class="hero-line" style="display:flex;align-items:baseline;gap:.35em;overflow:visible;">
-          <span class="hero-line-inner" id="hl3" style="display:flex;align-items:baseline;gap:.35em;">
+          <span class="hero-line-inner" id="hl2" style="display:flex;align-items:baseline;gap:.35em;">
             <span class="hero-phrase-static">Design rooted in</span><span class="cycling-word" id="cycling-word">curiosity</span>
           </span>
         </span>
@@ -701,54 +761,7 @@ h1.hero-title {
     </div>
   </div>
 
-  <!-- MARQUEE -->
-  <div class="panel" id="panel-marquee">
-    <div class="marquee-horiz" id="marquee-horiz"></div>
-  </div>
-
-  <!-- ABOUT -->
-  <div class="panel" id="panel-about">
-    <div class="about-left">
-      <div class="section-label panel-reveal">About</div>
-      <p class="about-bio panel-reveal" style="transition-delay:.1s">
-        Through marketing and communication, I built a <strong>sensitivity to design</strong> and user journeys.
-        Now pivoting to <strong>product design</strong> - driven by <strong>curiosity</strong>, empathy, and a strong attention to detail.
-      </p>
-      <div class="about-photo panel-reveal" style="transition-delay:.2s">
-        <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/portrait-craie.png"
-             alt="Camille Cong-Perret"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="about-photo-ph" style="display:none;">[ portrait craie.png ]</div>
-        <svg class="chalk-frame" viewBox="0 0 210 280" fill="none">
-          <path d="M8,12 Q9,4 18,6 L194,7 Q203,7 204,16 L205,264 Q205,274 196,274 L14,273 Q5,273 5,264 Z" stroke="rgba(240,234,224,0.4)" stroke-width="1.8" fill="none" stroke-dasharray="5 4"/>
-        </svg>
-      </div>
-      <div class="lang-tags panel-reveal" style="transition-delay:.3s;margin-top:14px">
-        <span class="lang-tag">French - native</span>
-        <span class="lang-tag">English - C1, TOEIC 980</span>
-      </div>
-    </div>
-    <div class="about-right">
-      <div class="illus-frame" id="illus-frame">
-        <div id="il-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .4s;">
-          <svg width="200" height="110" viewBox="0 0 200 110"><circle cx="100" cy="55" r="40" fill="none" stroke="rgba(240,234,224,0.1)" stroke-width="1.5" stroke-dasharray="4 3"/><text x="100" y="60" text-anchor="middle" font-family="DM Sans" font-size="11" fill="rgba(240,234,224,0.22)">check the items</text></svg>
-        </div>
-        <img id="illus-img" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
-      </div>
-      <h3 class="checklist-title">What I bring</h3>
-      <ul class="checklist" id="checklist">
-        <li class="checklist-item" data-index="0"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Curiosity that never stops learning<span class="strike-line"></span></span></li>
-        <li class="checklist-item" data-index="1"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Empathy for real users<span class="strike-line"></span></span></li>
-        <li class="checklist-item" data-index="2"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Attention to every detail<span class="strike-line"></span></span></li>
-        <li class="checklist-item" data-index="3"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Clear visual communication<span class="strike-line"></span></span></li>
-        <li class="checklist-item" data-index="4"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Fast learner, proactive<span class="strike-line"></span></span></li>
-      </ul>
-      <div class="cta-connect" id="cta-connect">Let's connect →</div>
-    </div>
-  </div>
-
-  <!-- WORKS -->
-  <div class="panel" id="panel-works">
+<div class="panel" id="panel-works">
     <h2 class="works-title panel-reveal">Works</h2>
 
     <!-- Card 1 - Alinea -->
@@ -824,8 +837,57 @@ h1.hero-title {
     </div>
   </div>
 
-  <!-- CONTACT -->
-  <div class="panel" id="panel-contact">
+  <!-- WAVE -->
+  <div class="panel" id="panel-wave">
+    <div class="wave-phrase" id="wave-phrase"></div>
+    <svg class="chalk-lines-svg" id="chalk-lines-svg" viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="chalk-line" id="cline1" d="M30,30 Q120,15 200,35 Q280,55 360,25 Q440,5 520,30"/>
+      <path class="chalk-line" id="cline2" d="M60,65 Q150,85 240,60 Q330,40 420,70 Q480,85 540,65"/>
+      <path class="arrow-line" id="arrow1" d="M270,100 Q290,108 310,100 M298,92 L310,100 L298,108"/>
+    </svg>
+  </div>
+
+<div class="panel" id="panel-about">
+    <div class="about-left">
+      <div class="section-label panel-reveal">About</div>
+      <p class="about-bio panel-reveal" style="transition-delay:.1s">
+        Through marketing and communication, I built a <strong>sensitivity to design</strong> and user journeys.
+        Now pivoting to <strong>product design</strong> - driven by <strong>curiosity</strong>, empathy, and a strong attention to detail.
+      </p>
+      <div class="about-photo panel-reveal" style="transition-delay:.2s">
+        <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/portrait-craie.png"
+             alt="Camille Cong-Perret"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="about-photo-ph" style="display:none;">[ portrait craie.png ]</div>
+        <svg class="chalk-frame" viewBox="0 0 210 280" fill="none">
+          <path d="M8,12 Q9,4 18,6 L194,7 Q203,7 204,16 L205,264 Q205,274 196,274 L14,273 Q5,273 5,264 Z" stroke="rgba(240,234,224,0.4)" stroke-width="1.8" fill="none" stroke-dasharray="5 4"/>
+        </svg>
+      </div>
+      <div class="lang-tags panel-reveal" style="transition-delay:.3s;margin-top:14px">
+        <span class="lang-tag">French - native</span>
+        <span class="lang-tag">English - C1, TOEIC 980</span>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="illus-frame" id="illus-frame">
+        <div id="il-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .4s;">
+          <svg width="200" height="110" viewBox="0 0 200 110"><circle cx="100" cy="55" r="40" fill="none" stroke="rgba(240,234,224,0.1)" stroke-width="1.5" stroke-dasharray="4 3"/><text x="100" y="60" text-anchor="middle" font-family="DM Sans" font-size="11" fill="rgba(240,234,224,0.22)">check the items</text></svg>
+        </div>
+        <img id="illus-img" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
+      </div>
+      <h3 class="checklist-title">What I bring</h3>
+      <ul class="checklist" id="checklist">
+        <li class="checklist-item" data-index="0"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Curiosity that never stops learning<span class="strike-line"></span></span></li>
+        <li class="checklist-item" data-index="1"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Empathy for real users<span class="strike-line"></span></span></li>
+        <li class="checklist-item" data-index="2"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Attention to every detail<span class="strike-line"></span></span></li>
+        <li class="checklist-item" data-index="3"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Clear visual communication<span class="strike-line"></span></span></li>
+        <li class="checklist-item" data-index="4"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Fast learner, proactive<span class="strike-line"></span></span></li>
+      </ul>
+      <div class="cta-connect" id="cta-connect">Let's connect →</div>
+    </div>
+  </div>
+
+<div class="panel" id="panel-contact">
     <div class="contact-blob"><svg width="340" height="340" viewBox="0 0 340 340"><ellipse cx="170" cy="170" rx="145" ry="136" fill="var(--c-blue)"/></svg></div>
     <div class="contact-headline panel-reveal">Get in<br>touch.</div>
     <div class="chalk-arrow-wrap" id="chalk-arrow">
@@ -899,8 +961,12 @@ window.addEventListener('touchmove',e=>{
 
 function getPanelX(id){ const el=document.getElementById(id); return el?el.offsetLeft:0; }
 
-const panelIds = ['panel-hero','panel-about','panel-works','panel-contact'];
+const panelIds = ['panel-hero','panel-works','panel-wave','panel-about','panel-contact'];
 const marqueeEl = document.getElementById('marquee-horiz');
+let chalkLinesDrawn = false;
+let waveActive = false;
+let waveSettled = false;
+let waveStart = 0;
 
 (function animScroll(){
   currentX+=(targetX-currentX)*0.09;
@@ -978,6 +1044,7 @@ function checkPanelReveal(){
   if(currentX>=worksX-window.innerWidth*.6){
     document.querySelectorAll('.work-card').forEach((c,i)=>setTimeout(()=>c.classList.add('show'),i*150));
   }
+  checkChalkLines();
   // contact arrow
   const contactX=getPanelX('panel-contact');
   if(currentX>=contactX-window.innerWidth*.5) document.getElementById('chalk-arrow')?.classList.add('show');
@@ -987,7 +1054,7 @@ function checkPanelReveal(){
 document.querySelectorAll('.nav-circle').forEach(nc=>{
   nc.addEventListener('click',()=>{
     const idx=parseInt(nc.dataset.panel);
-    const targets=['panel-hero','panel-about','panel-works','panel-contact'];
+    const targets=['panel-hero','panel-works','panel-wave','panel-about','panel-contact'];
     const id=targets[idx];
     if(id) targetX=Math.max(0,getPanelX(id));
   });
@@ -1019,7 +1086,7 @@ circleData.forEach((c,i)=>{
   heroCircleSVGs.push({wrap,circ:wrap.querySelector('circle'),r:c.r,color:c.color});
 });
 
-// Hero circles drawn after splash — see splash JS above
+// Hero circles ready, drawn by splash sequence
 
 // COMPRESS CIRCLES TO NAV
 let compressed=false;
@@ -1053,37 +1120,112 @@ async function cycleWords(){ await new Promise(r=>setTimeout(r,5000)); while(tru
 cycleWords();
 cycleEl.addEventListener('click',async()=>{ await eraseWord(); wIdx=(wIdx+1)%words.length; typeWord(words[wIdx]); });
 
-// SPLASH SCREEN
-const splashWords = ['sw0','sw1','sw2','sw3'];
+// SPLASH SCREEN - chalk writing char by char
 const splashEl = document.getElementById('splash');
-const splashCursor = document.getElementById('splash-cursor');
-splashWords.forEach((id, i) => {
-  setTimeout(() => {
-    document.getElementById(id)?.classList.add('written');
-  }, 300 + i * 380);
-});
-// After all words written, pause, then hide cursor and fade out
-setTimeout(() => {
-  if(splashCursor) splashCursor.style.display = 'none';
-  splashEl?.classList.add('hide');
-  setTimeout(() => {
-    if(splashEl) splashEl.style.display = 'none';
-    // Trigger hero animations after splash
-    ['hl0','hl1','hl2','hl3'].forEach((id,i) => {
-      setTimeout(()=>document.getElementById(id)?.classList.add('revealed'), i*140);
-    });
-    setTimeout(()=>{
-      document.getElementById('hero-hint')?.classList.add('show');
-      document.getElementById('dblob1').style.opacity='1';
-      document.getElementById('dblob2').style.opacity='1';
-    }, 800);
-    heroCircleSVGs.forEach((c,i) => {
-      setTimeout(()=>{ c.wrap.style.opacity='1'; c.circ.style.strokeDashoffset='0'; setTimeout(()=>c.wrap._float(),1300); }, i*150);
-    });
-  }, 900);
-}, 300 + splashWords.length * 380 + 900);
+const chalkTip = document.getElementById('chalk-tip');
+const splashChars = document.querySelectorAll('.splash-char:not(.space)');
+const totalChars = splashChars.length;
+const msPerChar = 55;
+let splashDone = false;
 
-// CHECKLIST - image swap
+function runSplash() {
+  if(chalkTip) chalkTip.style.display = 'block';
+  splashChars.forEach((ch, i) => {
+    setTimeout(() => {
+      ch.classList.add('drawn');
+      // Move chalk tip to this char position
+      if(chalkTip) {
+        const rect = ch.getBoundingClientRect();
+        chalkTip.style.left = (rect.right) + 'px';
+        chalkTip.style.top = (rect.top + rect.height * 0.7) + 'px';
+      }
+    }, i * msPerChar);
+  });
+  const totalTime = totalChars * msPerChar + 600;
+  setTimeout(() => {
+    if(chalkTip) chalkTip.style.display = 'none';
+    splashEl?.classList.add('hide');
+    setTimeout(() => {
+      if(splashEl) splashEl.style.display = 'none';
+      splashDone = true;
+      initHero();
+    }, 1000);
+  }, totalTime);
+}
+
+function initHero() {
+  ['hl0','hl1','hl2'].forEach((id,i) => {
+    setTimeout(()=>document.getElementById(id)?.classList.add('revealed'), i*140);
+  });
+  setTimeout(()=>{
+    document.getElementById('hero-hint')?.classList.add('show');
+    const d1 = document.getElementById('dblob1');
+    const d2 = document.getElementById('dblob2');
+    if(d1) d1.style.opacity='1';
+    if(d2) d2.style.opacity='1';
+  }, 700);
+  heroCircleSVGs.forEach((c,i) => {
+    setTimeout(()=>{ c.wrap.style.opacity='1'; c.circ.style.strokeDashoffset='0'; setTimeout(()=>c.wrap._float(),1300); }, i*150);
+  });
+}
+
+runSplash();
+
+// WAVE TEXT
+const wavePhrase = 'Curiosity leads me. Design is where I land.';
+const wavePhraseEl = document.getElementById('wave-phrase');
+if(wavePhraseEl) {
+  wavePhrase.split(' ').forEach(word => {
+    const wordSpan = document.createElement('span');
+    wordSpan.className = 'wave-word';
+    word.split('').forEach((ch, ci) => {
+      const s = document.createElement('span');
+      s.className = 'wave-char';
+      s.textContent = ch;
+      wordSpan.appendChild(s);
+    });
+    wavePhraseEl.appendChild(wordSpan);
+    const space = document.createElement('span');
+    space.style.cssText = 'display:inline-block;width:0.22em';
+    wavePhraseEl.appendChild(space);
+  });
+}
+
+// Wave animation - time-based oscillation, settles on scroll
+function animWave(ts) {
+  if(!waveActive) { requestAnimationFrame(animWave); return; }
+  const chars = document.querySelectorAll('.wave-char');
+  const t = (ts - waveStart) / 1000;
+  const wavePanel = document.getElementById('panel-wave');
+  const panelX = wavePanel ? wavePanel.offsetLeft : 0;
+  // settle progress: how much of wave has scrolled into/through view
+  const progress = Math.max(0, Math.min(1, (currentX - panelX + window.innerWidth) / (window.innerWidth * 1.2)));
+  const amplitude = waveSettled ? 0 : Math.max(0, 40 * (1 - progress * 1.4));
+  chars.forEach((ch, i) => {
+    const wave = Math.sin(i * 0.45 + t * 2.8) * amplitude;
+    ch.style.transform = `translateY(${wave}px)`;
+  });
+  if(amplitude < 1) waveSettled = true;
+  requestAnimationFrame(animWave);
+}
+requestAnimationFrame(animWave);
+
+// CHALK LINES on wave panel scroll
+function checkChalkLines() {
+  const wavePanel = document.getElementById('panel-wave');
+  if(!wavePanel || chalkLinesDrawn) return;
+  const panelX = wavePanel.offsetLeft;
+  if(currentX >= panelX - window.innerWidth * 0.3) {
+    chalkLinesDrawn = true;
+    waveActive = true;
+    waveStart = performance.now();
+    setTimeout(()=>{ document.getElementById('cline1')?.classList.add('drawing'); }, 200);
+    setTimeout(()=>{ document.getElementById('cline2')?.classList.add('drawing'); }, 600);
+    setTimeout(()=>{ document.getElementById('arrow1')?.classList.add('drawing'); }, 1400);
+  }
+}
+
+// CHECKLIST
 const ilHint = document.getElementById('il-hint');
 const ilImg = document.getElementById('illus-img');
 const imgSrcs = [
@@ -1096,83 +1238,36 @@ const imgSrcs = [
 
 function updateIllus() {
   const checked = [...document.querySelectorAll('.checklist-item.checked')];
-  if (checked.length === 0) {
-    ilImg.style.opacity = '0';
-    if(ilHint) ilHint.style.opacity = '1';
+  if(checked.length === 0) {
+    if(ilImg) ilImg.style.opacity='0';
+    if(ilHint) ilHint.style.opacity='1';
   } else {
-    const lastIdx = parseInt(checked[checked.length - 1].dataset.index);
-    if(ilHint) ilHint.style.opacity = '0';
-    ilImg.style.opacity = '0';
-    setTimeout(() => {
-      ilImg.src = imgSrcs[lastIdx];
-      ilImg.style.opacity = '1';
-    }, 200);
+    const lastIdx = parseInt(checked[checked.length-1].dataset.index);
+    if(ilHint) ilHint.style.opacity='0';
+    if(ilImg) {
+      ilImg.style.opacity='0';
+      setTimeout(()=>{ ilImg.src=imgSrcs[lastIdx]; ilImg.style.opacity='1'; },200);
+    }
   }
 }
 
 let checkedCount = 0;
 document.querySelectorAll('.checklist-item').forEach(item => {
-  item.addEventListener('mouseenter',()=>{
-    document.body.classList.add('cursor-pill');
-    dot.textContent = item.classList.contains('checked') ? 'uncheck' : 'check';
-  });
-  item.addEventListener('mouseleave',()=>{
-    document.body.classList.remove('cursor-pill');
-    dot.textContent='';
-  });
+  item.addEventListener('mouseenter',()=>{ document.body.classList.add('cursor-pill'); dot.textContent=item.classList.contains('checked')?'uncheck':'check'; });
+  item.addEventListener('mouseleave',()=>{ document.body.classList.remove('cursor-pill'); dot.textContent=''; });
   item.addEventListener('click',()=>{
-    const idx = parseInt(item.dataset.index);
     if(item.classList.contains('checked')){
-      item.classList.remove('checked');
-      checkedCount--;
+      item.classList.remove('checked'); checkedCount--;
       document.getElementById('cta-connect')?.classList.remove('show');
     } else {
-      item.classList.add('checked');
-      checkedCount++;
-      if(checkedCount >= 5) document.getElementById('cta-connect')?.classList.add('show');
+      item.classList.add('checked'); checkedCount++;
+      if(checkedCount>=5) document.getElementById('cta-connect')?.classList.add('show');
     }
     updateIllus();
   });
 });
 document.getElementById('cta-connect')?.addEventListener('click',()=>{ targetX=Math.max(0,getPanelX('panel-contact')); });
 
-// 3D TILT ON CARDS
-document.querySelectorAll('.work-card').forEach(card=>{
-  const baseTransform = card.style.transform;
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    const x=(e.clientX-r.left)/r.width-.5;
-    const y=(e.clientY-r.top)/r.height-.5;
-    card.style.transform=`${baseTransform} perspective(700px) rotateX(${-y*8}deg) rotateY(${x*8}deg) scale(1.05)`;
-  });
-  card.addEventListener('mouseleave',()=>{ card.style.transform=baseTransform; });
-});
-
-// BLOB TRANSITION
-const blobOverlay=document.getElementById('blob-overlay');
-const projectDetail=document.getElementById('project-detail');
-const detailContent=document.getElementById('detail-content');
-
-function openProject(idx){
-  const p=projects[idx];
-  blobOverlay.classList.add('active');
-  setTimeout(()=>{
-    detailContent.innerHTML=`<div class="detail-title">${p.title}</div><div class="detail-type">${p.type}</div><div class="detail-img">[ project image placeholder ]</div><div class="detail-section"><div class="detail-section-title">The Challenge</div><p class="detail-text">${p.challenge}</p></div><div class="detail-section"><div class="detail-section-title">My Approach</div><p class="detail-text">${p.approach}</p></div><div class="detail-section"><div class="detail-section-title">The Outcome</div><p class="detail-text">${p.outcome}</p></div><div class="detail-nav"><span class="detail-nav-btn" onclick="closeProject()">Back to playground</span><span class="detail-nav-btn" onclick="openProject(${(idx+1)%4})">Next project</span></div>`;
-    projectDetail.classList.add('show');
-    setTimeout(()=>projectDetail.classList.add('visible'),50);
-    setTimeout(()=>blobOverlay.classList.remove('active'),300);
-  },350);
-}
-function closeProject(){
-  blobOverlay.classList.add('active');
-  projectDetail.classList.remove('visible');
-  setTimeout(()=>{ projectDetail.classList.remove('show'); blobOverlay.classList.remove('active'); },400);
-}
-document.querySelectorAll('.work-card').forEach(card=>{
-  card.addEventListener('click',()=>openProject(parseInt(card.dataset.project)));
-});
-document.getElementById('detail-back')?.addEventListener('click',closeProject);
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeProject(); });
 </script>
 </body>
 </html>
