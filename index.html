@@ -154,42 +154,88 @@ body.cursor-pill #cursor-ring { opacity: 0; }
   transition: transform .8s cubic-bezier(.16,1,.3,1), opacity .6s ease;
 }
 .hero-line-inner.revealed { transform: translateY(0); opacity: 1; }
+/* SPLASH SCREEN */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 99990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.9s ease;
+}
+#splash.hide { opacity: 0; pointer-events: none; }
+.splash-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(36px, 6vw, 88px);
+  color: var(--chalk);
+  text-align: center;
+  line-height: 1.15;
+  filter: url(#chalk);
+  padding: 0 48px;
+}
+.splash-word {
+  display: inline-block;
+  opacity: 0;
+  margin-right: 0.22em;
+}
+.splash-word.written {
+  animation: chalk-write 0.4s cubic-bezier(0.2,0.8,0.4,1) forwards;
+}
+@keyframes chalk-write {
+  0%   { opacity:0; transform: translateY(16px) rotate(-2deg) scaleX(0.8); }
+  55%  { opacity:1; transform: translateY(-3px) rotate(0.6deg) scaleX(1.03); }
+  100% { opacity:1; transform: translateY(0) rotate(0deg) scaleX(1); }
+}
+.splash-cursor {
+  display: inline-block;
+  width: 3px; height: 0.85em;
+  background: var(--chalk);
+  margin-left: 3px;
+  vertical-align: middle;
+  animation: blink 0.55s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
 h1.hero-title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(13px, 1.4vw, 19px);
-  letter-spacing: .06em;
-  line-height: 1.3;
-  color: rgba(240,234,224,0.5);
-  margin-bottom: 28px;
+  font-size: clamp(11px, 1.2vw, 15px);
+  letter-spacing: .08em;
+  color: rgba(240,234,224,0.3);
+  margin-bottom: 18px;
   filter: none;
   white-space: nowrap;
 }
 .hero-name {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(52px, 8vw, 120px);
+  font-size: clamp(54px, 8.5vw, 126px);
   color: var(--chalk);
-  margin-bottom: 4px;
-  line-height: 1.05;
-  padding-bottom: 8px;
+  margin-bottom: 8px;
+  line-height: 1;
+  padding-bottom: 10px;
+  filter: url(#chalk);
 }
 .hero-role {
   font-family: var(--font-body);
-  font-size: clamp(11px, 1.3vw, 17px);
-  color: var(--chalk);
-  letter-spacing: .12em;
+  font-size: clamp(10px, 1vw, 13px);
+  color: rgba(240,234,224,0.4);
+  letter-spacing: .2em;
   text-transform: uppercase;
-  margin-bottom: 32px;
+  margin-bottom: 30px;
 }
 .hero-phrase {
   font-family: var(--font-body);
-  font-size: clamp(15px, 1.7vw, 22px);
+  font-size: clamp(18px, 2.1vw, 28px);
   color: var(--chalk);
   display: flex;
   align-items: baseline;
   gap: .35em;
   flex-wrap: wrap;
+  font-weight: 500;
 }
 .hero-phrase-static { white-space: nowrap; }
 .cycling-word {
@@ -566,6 +612,17 @@ h1.hero-title {
 
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-text" id="splash-text">
+    <span class="splash-word" id="sw0">welcome</span>
+    <span class="splash-word" id="sw1">to</span>
+    <span class="splash-word" id="sw2">my</span>
+    <br>
+    <span class="splash-word" id="sw3">playground</span><span class="splash-cursor" id="splash-cursor"></span>
+  </div>
+</div>
 <div id="progress-bar"><div id="progress-fill"></div></div>
 
 <svg width="0" height="0" style="position:absolute">
@@ -673,24 +730,10 @@ h1.hero-title {
     </div>
     <div class="about-right">
       <div class="illus-frame" id="illus-frame">
-        <div class="illus-layer" id="il-hint">
+        <div id="il-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .4s;">
           <svg width="200" height="110" viewBox="0 0 200 110"><circle cx="100" cy="55" r="40" fill="none" stroke="rgba(240,234,224,0.1)" stroke-width="1.5" stroke-dasharray="4 3"/><text x="100" y="60" text-anchor="middle" font-family="DM Sans" font-size="11" fill="rgba(240,234,224,0.22)">check the items</text></svg>
         </div>
-        <div class="illus-layer" id="il0">
-          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-1.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">
-        </div>
-        <div class="illus-layer" id="il1">
-          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-2.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">
-        </div>
-        <div class="illus-layer" id="il2">
-          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-3.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">
-        </div>
-        <div class="illus-layer" id="il3">
-          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-4.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">
-        </div>
-        <div class="illus-layer" id="il4">
-          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-5.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">
-        </div>
+        <img id="illus-img" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s ease;">
       </div>
       <h3 class="checklist-title">What I bring</h3>
       <ul class="checklist" id="checklist">
@@ -975,19 +1018,8 @@ circleData.forEach((c,i)=>{
   wrap._float=()=>wrap.animate(floatKf,{duration:c.dur*1000,iterations:Infinity,easing:'ease-in-out'});
   heroCircleSVGs.push({wrap,circ:wrap.querySelector('circle'),r:c.r,color:c.color});
 });
-heroCircleSVGs.forEach((c,i)=>{
-  setTimeout(()=>{ c.wrap.style.opacity='1'; c.circ.style.strokeDashoffset='0'; setTimeout(()=>c.wrap._float(),1300); },300+i*150);
-});
 
-// HERO TEXT
-['hl0','hl1','hl2','hl3'].forEach((id,i)=>{
-  setTimeout(()=>document.getElementById(id)?.classList.add('revealed'),900+i*140);
-});
-setTimeout(()=>{
-  document.getElementById('hero-hint')?.classList.add('show');
-  document.getElementById('dblob1').style.opacity='1';
-  document.getElementById('dblob2').style.opacity='1';
-},2200);
+// Hero circles drawn after splash — see splash JS above
 
 // COMPRESS CIRCLES TO NAV
 let compressed=false;
@@ -1021,12 +1053,65 @@ async function cycleWords(){ await new Promise(r=>setTimeout(r,5000)); while(tru
 cycleWords();
 cycleEl.addEventListener('click',async()=>{ await eraseWord(); wIdx=(wIdx+1)%words.length; typeWord(words[wIdx]); });
 
-// CHECKLIST - toggleable
-let checkedCount=0;
-const ilHint = document.getElementById('il-hint');
-if(ilHint) ilHint.classList.add('show');
+// SPLASH SCREEN
+const splashWords = ['sw0','sw1','sw2','sw3'];
+const splashEl = document.getElementById('splash');
+const splashCursor = document.getElementById('splash-cursor');
+splashWords.forEach((id, i) => {
+  setTimeout(() => {
+    document.getElementById(id)?.classList.add('written');
+  }, 300 + i * 380);
+});
+// After all words written, pause, then hide cursor and fade out
+setTimeout(() => {
+  if(splashCursor) splashCursor.style.display = 'none';
+  splashEl?.classList.add('hide');
+  setTimeout(() => {
+    if(splashEl) splashEl.style.display = 'none';
+    // Trigger hero animations after splash
+    ['hl0','hl1','hl2','hl3'].forEach((id,i) => {
+      setTimeout(()=>document.getElementById(id)?.classList.add('revealed'), i*140);
+    });
+    setTimeout(()=>{
+      document.getElementById('hero-hint')?.classList.add('show');
+      document.getElementById('dblob1').style.opacity='1';
+      document.getElementById('dblob2').style.opacity='1';
+    }, 800);
+    heroCircleSVGs.forEach((c,i) => {
+      setTimeout(()=>{ c.wrap.style.opacity='1'; c.circ.style.strokeDashoffset='0'; setTimeout(()=>c.wrap._float(),1300); }, i*150);
+    });
+  }, 900);
+}, 300 + splashWords.length * 380 + 900);
 
-document.querySelectorAll('.checklist-item').forEach(item=>{
+// CHECKLIST - image swap
+const ilHint = document.getElementById('il-hint');
+const ilImg = document.getElementById('illus-img');
+const imgSrcs = [
+  'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-1.png',
+  'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-2.png',
+  'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-3.png',
+  'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-4.png',
+  'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-5.png',
+];
+
+function updateIllus() {
+  const checked = [...document.querySelectorAll('.checklist-item.checked')];
+  if (checked.length === 0) {
+    ilImg.style.opacity = '0';
+    if(ilHint) ilHint.style.opacity = '1';
+  } else {
+    const lastIdx = parseInt(checked[checked.length - 1].dataset.index);
+    if(ilHint) ilHint.style.opacity = '0';
+    ilImg.style.opacity = '0';
+    setTimeout(() => {
+      ilImg.src = imgSrcs[lastIdx];
+      ilImg.style.opacity = '1';
+    }, 200);
+  }
+}
+
+let checkedCount = 0;
+document.querySelectorAll('.checklist-item').forEach(item => {
   item.addEventListener('mouseenter',()=>{
     document.body.classList.add('cursor-pill');
     dot.textContent = item.classList.contains('checked') ? 'uncheck' : 'check';
@@ -1036,21 +1121,17 @@ document.querySelectorAll('.checklist-item').forEach(item=>{
     dot.textContent='';
   });
   item.addEventListener('click',()=>{
-    const idx=parseInt(item.dataset.index);
-    const ilEl=document.getElementById('il'+idx);
+    const idx = parseInt(item.dataset.index);
     if(item.classList.contains('checked')){
       item.classList.remove('checked');
       checkedCount--;
-      if(ilEl) ilEl.classList.remove('show');
       document.getElementById('cta-connect')?.classList.remove('show');
-      if(checkedCount===0 && ilHint) ilHint.classList.add('show');
     } else {
       item.classList.add('checked');
       checkedCount++;
-      if(ilEl) ilEl.classList.add('show');
-      if(ilHint) ilHint.classList.remove('show');
-      if(checkedCount>=5) document.getElementById('cta-connect')?.classList.add('show');
+      if(checkedCount >= 5) document.getElementById('cta-connect')?.classList.add('show');
     }
+    updateIllus();
   });
 });
 document.getElementById('cta-connect')?.addEventListener('click',()=>{ targetX=Math.max(0,getPanelX('panel-contact')); });
