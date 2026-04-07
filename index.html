@@ -147,7 +147,7 @@ body.cursor-pill #cursor-ring { opacity: 0; }
   text-align: left;
   max-width: 900px;
 }
-.hero-line { overflow: hidden; display: block; }
+.hero-line { overflow: visible; display: block; }
 .hero-line-inner {
   display: block;
   transform: translateY(100%); opacity: 0;
@@ -219,22 +219,23 @@ h1.hero-title {
   font-weight: 700;
   font-size: clamp(54px, 8.5vw, 126px);
   color: var(--chalk);
-  margin-bottom: 8px;
-  line-height: 1;
-  padding-bottom: 10px;
+  margin-bottom: 36px;
+  line-height: 1.2;
+  padding-bottom: 28px;
+  overflow: visible;
   filter: url(#chalk);
 }
 .hero-role {
   font-family: var(--font-body);
   font-size: clamp(10px, 1vw, 13px);
-  color: rgba(240,234,224,0.4);
+  color: var(--chalk);
   letter-spacing: .2em;
   text-transform: uppercase;
-  margin-bottom: 30px;
+  margin-bottom: 14px;
 }
 .hero-phrase {
   font-family: var(--font-body);
-  font-size: clamp(18px, 2.1vw, 28px);
+  font-size: clamp(22px, 2.6vw, 36px);
   color: var(--chalk);
   display: flex;
   align-items: baseline;
@@ -515,6 +516,12 @@ h1.hero-title {
   font-family: var(--font-body); font-size: 11px;
   color: rgba(240,234,224,0.2);
 }
+.card-video {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block; opacity: 0;
+  transition: opacity .35s ease;
+}
+.work-card:hover .card-video { opacity: 1; }
 .card-body { padding: 14px 16px 16px; }
 .card-num {
   font-family: var(--font-body); font-size: 10px;
@@ -730,8 +737,8 @@ h1.hero-title {
     </div>
     <div id="hero-circles"></div>
     <div id="hero-content">
-      <p class="hero-name"><span class="hero-line"><span class="hero-line-inner" id="hl0">Camille<br>Cong-Perret</span></span></p>
-      <p class="hero-role"><span class="hero-line"><span class="hero-line-inner" id="hl1">Product Designer</span></span></p>
+      <p class="hero-role"><span class="hero-line"><span class="hero-line-inner" id="hl0">Product Designer</span></span></p>
+      <p class="hero-name"><span class="hero-line"><span class="hero-line-inner" id="hl1">Camille<br>Cong Perret</span></span></p>
       <p class="hero-phrase">
         <span class="hero-line" style="display:flex;align-items:baseline;gap:.35em;overflow:visible;">
           <span class="hero-line-inner" id="hl2" style="display:flex;align-items:baseline;gap:.35em;">
@@ -760,7 +767,7 @@ h1.hero-title {
           C 226,179 218,162 240,115
           C 262,68 320,20 420,30
           C 520,40 580,120 575,172
-          M 562,158 L 575,172 L 562,186
+          M 558,160 L 575,172 L 585,158
         "/>
       </svg>
       <div class="wave-phrase" id="wave-phrase"></div>
@@ -786,10 +793,10 @@ h1.hero-title {
 
     <!-- Card 1 - Alinea -->
     <div class="work-card" data-project="0"
-         style="top:12vh;left:4vw;transform:rotate(-4deg);z-index:3;">
+         style="top:28vh;left:4vw;transform:rotate(-4deg);z-index:3;">
       <div class="card-pin" style="background:var(--c-red);"></div>
       <div class="card-img-placeholder">
-        <span class="img-label">[ project image ]</span>
+        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-alinea.mp4" muted playsinline preload="none" loop></video>
       </div>
       <div class="card-body">
         <div class="card-num">01</div>
@@ -807,7 +814,7 @@ h1.hero-title {
          style="top:44vh;left:28vw;transform:rotate(2.5deg);z-index:2;">
       <div class="card-pin" style="background:var(--c-blue);"></div>
       <div class="card-img-placeholder">
-        <span class="img-label">[ project image ]</span>
+        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-united-healthcare.mp4" muted playsinline preload="none" loop></video>
       </div>
       <div class="card-body">
         <div class="card-num">02</div>
@@ -822,10 +829,10 @@ h1.hero-title {
 
     <!-- Card 3 - Innocent -->
     <div class="work-card" data-project="2"
-         style="top:12vh;left:52vw;transform:rotate(1deg);z-index:4;">
+         style="top:28vh;left:52vw;transform:rotate(1deg);z-index:4;">
       <div class="card-pin" style="background:var(--c-green);"></div>
       <div class="card-img-placeholder">
-        <span class="img-label">[ project image ]</span>
+        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-innocent.mp4" muted playsinline preload="none" loop></video>
       </div>
       <div class="card-body">
         <div class="card-num">03</div>
@@ -843,7 +850,7 @@ h1.hero-title {
          style="top:44vh;left:76vw;transform:rotate(-3deg);z-index:3;">
       <div class="card-pin" style="background:var(--c-yellow);"></div>
       <div class="card-img-placeholder">
-        <span class="img-label">[ project image ]</span>
+        <video class="card-video" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-la-pivoine.mov" muted playsinline preload="none" loop></video>
       </div>
       <div class="card-body">
         <div class="card-num">04</div>
@@ -944,8 +951,15 @@ document.querySelectorAll('a,button,.work-card,.nav-circle,.cta-connect,.detail-
   el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-open'));
 });
 document.querySelectorAll('.work-card').forEach(card=>{
-  card.addEventListener('mouseenter',()=>{ document.body.classList.add('cursor-pill'); dot.textContent='open'; });
-  card.addEventListener('mouseleave',()=>{ document.body.classList.remove('cursor-pill'); dot.textContent=''; });
+  const vid = card.querySelector('.card-video');
+  card.addEventListener('mouseenter',()=>{
+    document.body.classList.add('cursor-pill'); dot.textContent='open';
+    if(vid){ vid.load(); vid.play().catch(()=>{}); }
+  });
+  card.addEventListener('mouseleave',()=>{
+    if(vid){ vid.pause(); vid.currentTime=0; }
+    document.body.classList.remove('cursor-pill'); dot.textContent='';
+  });
 });
 document.querySelector('.contact-email')?.addEventListener('mouseenter',()=>{ document.body.classList.add('cursor-pill'); dot.textContent='write to me'; });
 document.querySelector('.contact-email')?.addEventListener('mouseleave',()=>{ document.body.classList.remove('cursor-pill'); dot.textContent=''; });
@@ -1124,14 +1138,46 @@ setInterval(()=>{
 },100);
 
 // TYPEWRITER CYCLING WORD
-const words=['curiosity','people','intent','logic','care','clarity','craft'];
+const words=['curiosity','people','craft','intention','care','clarity','play'];
 let wIdx=0;
 const cycleEl=document.getElementById('cycling-word');
-function typeWord(w){ let i=0; cycleEl.textContent=''; const iv=setInterval(()=>{ cycleEl.textContent+=w[i]||''; i++; if(i>=w.length) clearInterval(iv); },45); }
-function eraseWord(){ return new Promise(r=>{ let i=cycleEl.textContent.length; const iv=setInterval(()=>{ cycleEl.textContent=cycleEl.textContent.slice(0,-1); i--; if(i<=0){clearInterval(iv);r();} },35); }); }
-async function cycleWords(){ await new Promise(r=>setTimeout(r,5000)); while(true){ await eraseWord(); wIdx=(wIdx+1)%words.length; typeWord(words[wIdx]); await new Promise(r=>setTimeout(r,5000)); } }
+
+function typeWord(w){
+  cycleEl.textContent='';
+  let i=0;
+  const iv=setInterval(()=>{
+    if(i < w.length){ cycleEl.textContent=w.slice(0,i+1); i++; }
+    else clearInterval(iv);
+  },55);
+}
+
+function eraseWord(){
+  return new Promise(r=>{
+    const iv=setInterval(()=>{
+      const cur=cycleEl.textContent;
+      if(cur.length===0){ clearInterval(iv); r(); return; }
+      cycleEl.textContent=cur.slice(0,-1);
+    },40);
+  });
+}
+
+async function cycleWords(){
+  await new Promise(r=>setTimeout(r,5000));
+  while(true){
+    await eraseWord();
+    wIdx=(wIdx+1)%words.length;
+    await new Promise(r=>setTimeout(r,80));
+    typeWord(words[wIdx]);
+    await new Promise(r=>setTimeout(r,5000));
+  }
+}
 cycleWords();
-cycleEl.addEventListener('click',async()=>{ await eraseWord(); wIdx=(wIdx+1)%words.length; typeWord(words[wIdx]); });
+cycleEl.addEventListener('click',async()=>{
+  await eraseWord();
+  wIdx=(wIdx+1)%words.length;
+  await new Promise(r=>setTimeout(r,80));
+  typeWord(words[wIdx]);
+});
 
 // SPLASH SCREEN - chalk writing char by char
 const splashEl = document.getElementById('splash');
