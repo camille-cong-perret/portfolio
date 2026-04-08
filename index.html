@@ -139,30 +139,28 @@ body.cursor-pill #cursor-ring { opacity: 0; }
 }
 .panel { flex-shrink: 0; height: 100vh; position: relative; overflow: hidden; }
 /* ---- HERO ---- */
-#panel-hero { width: 100vw; display: flex; align-items: center; justify-content: space-between; overflow: hidden; }
+#panel-hero { width: 100vw; display: flex; align-items: center; overflow: hidden; position: relative; }
 #hero-circles { position: absolute; inset: 0; pointer-events: none; }
 #hero-content {
   position: relative; z-index: 2;
   padding: 0 80px;
   text-align: left;
-  max-width: 540px;
+  max-width: 560px;
   flex-shrink: 0;
 }
 #hero-images {
-  position: relative; z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  align-items: center;
-  padding-right: 60px;
-  flex-shrink: 0;
-  width: 220px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 45vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
 }
 .hero-img-item {
-  position: relative;
+  position: absolute;
   cursor: pointer;
-  width: 100px;
-  height: 100px;
+  pointer-events: all;
 }
 .hero-img-item img {
   width: 100%;
@@ -787,19 +785,19 @@ h1.hero-title {
       </p>
     </div>
     <div id="hero-images">
-      <div class="hero-img-item" data-circle="cercle-escalade.png" data-expand="escalade.png">
+      <div class="hero-img-item" style="width:160px;height:160px;top:8vh;left:8%;transform:rotate(-6deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-escalade.png" alt="escalade">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/escalade.png" alt="escalade">
       </div>
-      <div class="hero-img-item" data-circle="cercle-tourne-disque.png" data-expand="tourne-disque.png">
+      <div class="hero-img-item" style="width:140px;height:140px;top:6vh;left:52%;transform:rotate(4deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-tourne-disque.png" alt="tourne-disque">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/tourne-disque.png" alt="tourne-disque">
       </div>
-      <div class="hero-img-item" data-circle="cercle-bouquet.png" data-expand="bouquet.png">
+      <div class="hero-img-item" style="width:150px;height:150px;top:42vh;left:2%;transform:rotate(5deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-bouquet.png" alt="bouquet">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/bouquet.png" alt="bouquet">
       </div>
-      <div class="hero-img-item" data-circle="cercle-ordinateur.png" data-expand="ordinateur.png">
+      <div class="hero-img-item" style="width:155px;height:155px;top:50vh;left:48%;transform:rotate(-4deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-ordinateur.png" alt="ordinateur">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/ordinateur.png" alt="ordinateur">
       </div>
