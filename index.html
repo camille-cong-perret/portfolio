@@ -897,28 +897,28 @@ h1.hero-title {
       </p>
     </div>
     <div id="hero-images">
-      <div class="hero-img-item" style="width:240px;height:240px;top:25vh;left:8%;transform:rotate(-6deg);">
+      <div class="hero-img-item" style="width:240px;height:240px;top:25vh;left:2%;transform:rotate(-6deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-escalade.png" alt="escalade">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/escalade.png" alt="escalade">
 <div class="hero-annotation" style="top:-110px;left:10px;display:flex;flex-direction:column;align-items:flex-start;"><div class="hero-annotation-text" style="color:#d59f24;margin-bottom:6px;text-align:left;">where i go to challenge myself</div><svg width="100" height="100" viewBox="0 0 100 100" fill="none"><defs><marker id="md59f24" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="none" stroke="#d59f24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path d="M 10,5 C 15,45 50,75 90,95" stroke="#d59f24" stroke-width="2" stroke-linecap="round" marker-end="url(#md59f24)"/></svg></div>
       
       
       </div>
-      <div class="hero-img-item" style="width:220px;height:220px;top:22vh;left:52%;transform:rotate(4deg);">
+      <div class="hero-img-item" style="width:220px;height:220px;top:22vh;left:42%;transform:rotate(4deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-tourne-disque.png" alt="tourne-disque">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/tourne-disque.png" alt="tourne-disque">
 <div class="hero-annotation" style="top:-110px;right:10px;display:flex;flex-direction:column;align-items:flex-end;"><div class="hero-annotation-text" style="color:#cd5242;margin-bottom:6px;text-align:right;">how i blast music at home</div><svg width="100" height="100" viewBox="0 0 100 100" fill="none"><defs><marker id="mcd5242" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="none" stroke="#cd5242" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path d="M 90,5 C 85,45 50,75 10,95" stroke="#cd5242" stroke-width="2" stroke-linecap="round" marker-end="url(#mcd5242)"/></svg></div>
       
       
       </div>
-      <div class="hero-img-item" style="width:230px;height:230px;top:48vh;left:28%;transform:rotate(5deg);">
+      <div class="hero-img-item" style="width:230px;height:230px;top:48vh;left:2%;transform:rotate(5deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-bouquet.png" alt="bouquet">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/bouquet.png" alt="bouquet">
 <div class="hero-annotation" style="bottom:-108px;left:10px;display:flex;flex-direction:column;align-items:flex-start;"><svg width="100" height="100" viewBox="0 0 100 100" fill="none"><defs><marker id="m4f6753" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="none" stroke="#4f6753" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path d="M 10,95 C 15,55 50,25 90,5" stroke="#4f6753" stroke-width="2" stroke-linecap="round" marker-end="url(#m4f6753)"/></svg><div class="hero-annotation-text" style="color:#4f6753;margin-top:6px;text-align:left;">my favorite flowers</div></div>
       
       
       </div>
-      <div class="hero-img-item" style="width:230px;height:230px;top:48vh;left:62%;transform:rotate(-4deg);">
+      <div class="hero-img-item" style="width:230px;height:230px;top:48vh;left:42%;transform:rotate(-4deg);">
         <img class="img-circle" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-ordinateur.png" alt="ordinateur">
         <img class="img-expand" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/ordinateur.png" alt="ordinateur">
 <div class="hero-annotation" style="bottom:-108px;right:10px;display:flex;flex-direction:column;align-items:flex-end;"><svg width="100" height="100" viewBox="0 0 100 100" fill="none"><defs><marker id="m345683" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="none" stroke="#345683" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><path d="M 90,95 C 85,55 50,25 10,5" stroke="#345683" stroke-width="2" stroke-linecap="round" marker-end="url(#m345683)"/></svg><div class="hero-annotation-text" style="color:#345683;margin-top:6px;text-align:right;">where my creativity unfolds</div></div>
@@ -1155,6 +1155,9 @@ document.querySelectorAll('.work-card').forEach(card=>{
   card.addEventListener('mouseleave',()=>{
     if(vid){ vid.pause(); vid.currentTime=0; }
     document.body.classList.remove('cursor-pill'); dot.textContent='';
+  });
+  card.addEventListener('click',()=>{
+    openProject(projIdx);
   });
 });
 // contact email cursor removed
@@ -1668,12 +1671,6 @@ function closeProject() {
     setTimeout(() => chalkOverlay.classList.remove('leaving'), 600);
   }, 400);
 }
-
-document.querySelectorAll('.work-card').forEach(card => {
-  card.addEventListener('click', () => {
-    openProject(parseInt(card.dataset.project));
-  });
-});
 
 document.getElementById('detail-back').addEventListener('click', closeProject);
 
