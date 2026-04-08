@@ -734,12 +734,6 @@ h1.hero-title {
 
 <div id="scroll-container">
 <div class="panel" id="panel-hero">
-    <div style="position:absolute;top:-60px;left:-60px;pointer-events:none;opacity:0;transition:opacity 1s;" id="dblob1">
-      <svg width="300" height="300" viewBox="0 0 300 300"><ellipse cx="150" cy="150" rx="120" ry="110" fill="none" stroke="var(--c-red)" stroke-width="1.5" opacity="0.4"/></svg>
-    </div>
-    <div style="position:absolute;bottom:-40px;right:-40px;pointer-events:none;opacity:0;transition:opacity 1s;" id="dblob2">
-      <svg width="260" height="260" viewBox="0 0 260 260"><ellipse cx="130" cy="130" rx="105" ry="100" fill="var(--c-blue)" opacity="0.07"/><ellipse cx="130" cy="130" rx="105" ry="100" fill="none" stroke="var(--c-blue)" stroke-width="1.5" opacity="0.3"/></svg>
-    </div>
     <div id="hero-circles"></div>
     <div id="hero-content">
       <p class="hero-role"><span class="hero-line"><span class="hero-line-inner" id="hl0">Product Designer</span></span></p>
@@ -1113,11 +1107,10 @@ document.querySelectorAll('.nav-circle').forEach(nc=>{
 // HERO CIRCLES
 const base = 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/';
 const circleData=[
-  {img:'cercle-escalade.png',    expand:'escalade.png',    x:'10%',y:'12%',r:120,dur:8},
-  {img:'cercle-tourne-disque.png',expand:'tourne-disque.png',x:'74%',y:'8%', r:100,dur:11},
-  {img:'cercle-bouquet.png',     expand:'bouquet.png',     x:'84%',y:'60%',r:85, dur:13},
-  {img:'cercle-ordinateur.png',  expand:'ordinateur.png',  x:'6%', y:'68%',r:95, dur:9},
-  {img:'cercle-escalade.png',    expand:'escalade.png',    x:'52%',y:'82%',r:75, dur:12}
+  {img:'cercle-escalade.png',     expand:'escalade.png',     x:'10%',y:'12%',r:120,dur:8},
+  {img:'cercle-tourne-disque.png',expand:'tourne-disque.png',x:'78%',y:'10%',r:100,dur:11},
+  {img:'cercle-bouquet.png',      expand:'bouquet.png',      x:'82%',y:'62%',r:90, dur:13},
+  {img:'cercle-ordinateur.png',   expand:'ordinateur.png',   x:'8%', y:'70%',r:95, dur:9}
 ];
 const heroCirclesEl=document.getElementById('hero-circles');
 const heroCircleSVGs=[];
@@ -1266,10 +1259,6 @@ function initHero() {
   });
   setTimeout(()=>{
     document.getElementById('hero-hint')?.classList.add('show');
-    const d1 = document.getElementById('dblob1');
-    const d2 = document.getElementById('dblob2');
-    if(d1) d1.style.opacity='1';
-    if(d2) d2.style.opacity='1';
   }, 700);
   heroCircleSVGs.forEach((c,i) => {
     setTimeout(()=>{ c.wrap.style.opacity='1'; setTimeout(()=>c.wrap._float(),1300); }, i*150);
@@ -1301,12 +1290,18 @@ function updateWaveEffect() {
   // Progress: 0 when panel right edge is at screen right, 1 when panel is centered
   const progress = Math.max(0, Math.min(1, (currentX - (panelX - screenW)) / screenW));
 
-  // Letters tumble in from a wave and settle into position
+  // Per-letter arrival wave: each letter bounces as it arrives, then settles
   const chars = document.querySelectorAll('.wave-char');
+  const total = chars.length || 1;
   chars.forEach((ch, i) => {
-    const settle = Math.min(1, progress * 2); // settles faster
-    const wave = Math.sin(progress * 10 + i * 0.35) * 28 * (1 - settle);
-    const rot  = Math.cos(progress *  6 + i * 0.2 ) * 18 * (1 - settle);
+    // Spread arrivals: first letter arrives at progress=0, last at progress=0.8
+    const arrival = (i / (total - 1)) * 0.8;
+    // How far past its arrival we are
+    const phase = progress - arrival;
+    // Bell-curve amplitude: peaks at arrival, decays quickly after
+    const amp = Math.max(0, 1 - Math.abs(phase) * 5) * 36;
+    const wave = Math.sin(phase * 18) * amp;
+    const rot  = Math.cos(phase * 12) * amp * 0.5;
     ch.style.transform = `translateY(${wave}px) rotate(${rot}deg)`;
   });
 
