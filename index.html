@@ -1050,7 +1050,7 @@ document.querySelector('.contact-email')?.addEventListener('mouseleave',()=>{ do
 const container = document.getElementById('scroll-container');
 let targetX=0, currentX=0, maxX=0;
 function calcMax(){ maxX = container.scrollWidth - window.innerWidth; }
-window.addEventListener('resize', calcMax);
+window.addEventListener('resize', ()=>{ calcMax(); heroImgStartPos=null; navTargetPos=null; });
 setTimeout(calcMax, 300);
 
 window.addEventListener('wheel',e=>{ e.preventDefault(); targetX=Math.max(0,Math.min(targetX+e.deltaY*1.4,maxX)); },{passive:false});
@@ -1216,26 +1216,60 @@ circleData.forEach((c,i)=>{
 // Hero circles ready, drawn by splash sequence
 
 // COMPRESS CIRCLES TO NAV
-let compressed=false;
-setInterval(()=>{
-  if(!compressed&&currentX>60){
-    compressed=true;
-    const nav=document.getElementById('bottom-nav');
-    const navCircles=nav.querySelectorAll('.nav-circle');
-    heroCircleSVGs.forEach((c,i)=>{
-      const navEl=navCircles[i];
-      if(!navEl){ c.wrap.style.opacity='0'; return; }
-      const navRect=navEl.getBoundingClientRect();
-      const wrapRect=c.wrap.getBoundingClientRect();
-      const dx=(navRect.left+navRect.width/2)-(wrapRect.left+wrapRect.width/2);
-      const dy=(navRect.top+navRect.height/2)-(wrapRect.top+wrapRect.height/2);
-      c.wrap.style.transition=`transform .9s cubic-bezier(.34,1.2,.64,1), opacity .4s .7s`;
-      c.wrap.style.transform=`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(.1)`;
-      setTimeout(()=>c.wrap.style.opacity='0',700);
-    });
-    setTimeout(()=>nav.classList.add('visible'),800);
+// HERO IMAGES → NAV ANIMATION (scroll-based)
+let heroImgStartPos = null; // captured at currentX=0
+let navTargetPos = null;
+
+function capturePositions() {
+  const items = document.querySelectorAll('.hero-img-item');
+  const navCs = document.querySelectorAll('.nav-circle');
+  heroImgStartPos = [...items].map(el => {
+    const r = el.getBoundingClientRect();
+    return { cx: r.left + r.width/2, cy: r.top + r.height/2, w: r.width, h: r.height, el };
+  });
+  navTargetPos = [...navCs].slice(0,4).map(el => {
+    const r = el.getBoundingClientRect();
+    return { cx: r.left + r.width/2, cy: r.top + r.height/2, w: r.width, h: r.height };
+  });
+}
+
+function animHeroToNav() {
+  // Capture starting positions once (at currentX ≈ 0)
+  if(!heroImgStartPos && currentX < 10) capturePositions();
+  if(!heroImgStartPos || !navTargetPos) return;
+
+  const progress = Math.max(0, Math.min(1, currentX / (window.innerWidth * 0.8)));
+  const eased = progress < 0.5 ? 2*progress*progress : 1-Math.pow(-2*progress+2,2)/2;
+
+  const items = document.querySelectorAll('.hero-img-item');
+  items.forEach((el, i) => {
+    const start = heroImgStartPos[i];
+    const target = navTargetPos[i];
+    if(!start || !target) return;
+
+    const dx = (target.cx - start.cx) * eased;
+    const dy = (target.cy - start.cy) * eased;
+    const targetScale = target.w / start.w;
+    const scale = 1 + (targetScale - 1) * eased;
+
+    // Items are absolutely positioned; translate from their natural position
+    el.style.transition = 'none';
+    el.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+    el.style.transformOrigin = 'center center';
+    // Fade the circle image slightly as it becomes a nav button
+    el.style.opacity = 1 - eased * 0.2;
+  });
+
+  // Nav SVG circles fade in when images arrive
+  const nav = document.getElementById('bottom-nav');
+  if(nav) {
+    if(eased > 0.85) {
+      nav.classList.add('visible');
+    } else {
+      nav.classList.remove('visible');
+    }
   }
-},100);
+}
 
 // TYPEWRITER CYCLING WORD
 const words=['curiosity','people','craft','intention','care','clarity','play'];
