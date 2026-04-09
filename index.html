@@ -813,10 +813,13 @@ h1.hero-title {
   font-size: 22px; color: var(--chalk); margin-bottom: 14px;
   display: flex; align-items: center; justify-content: center; gap: 12px;
 }
+.detail-section-title::after {
+  content:''; display:block; width:28px; height:1.5px; background: var(--line-color, var(--accent)); flex-shrink:0;
+}
 .detail-section-title::before {
   content:''; display:block; width:28px; height:1.5px; background: var(--line-color, var(--accent)); flex-shrink:0;
 }
-.detail-text { color: var(--chalk-muted); line-height: 1.85; font-size: 15px; text-align: center; }
+.detail-text { color: var(--chalk); line-height: 1.85; font-size: 15px; text-align: center; }
 .detail-nav {
   display: flex; justify-content: space-between;
   margin-top: 80px; padding-top: 28px;
@@ -831,26 +834,23 @@ h1.hero-title {
 .detail-nav-btn:hover { color: var(--chalk); }
 
 
-.detail-link-wrap { margin-bottom: 40px; }
+.detail-link-wrap { margin-bottom: 40px; text-align: center; }
+.detail-link-row {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-body); font-size: 14px;
+}
+.detail-link-prefix {
+  color: var(--chalk-muted);
+}
 .detail-link {
-  font-family: var(--font-body);
-  font-size: 14px;
   color: var(--chalk-muted);
   text-decoration: none;
-  transition: color .2s, font-family .15s;
+  transition: color .2s, font-style .15s;
   display: inline-block;
 }
 .detail-link:hover {
   color: var(--c-red);
   font-style: italic;
-}
-.detail-link::before {
-  content: 'explore the website → ';
-  color: var(--chalk-muted);
-  font-style: normal;
-}
-.detail-link:hover::before {
-  color: var(--c-red);
 }
 </style>
 </head>
@@ -941,9 +941,9 @@ h1.hero-title {
       </div>
     </div>
     <div class="hero-hint" id="hero-hint">
-      <span style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,234,224,0.38)">scroll</span>
+      <span style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,234,224,0.3)">scroll</span>
       <span class="hint-arrow">
-        <svg width="24" height="16" viewBox="0 0 24 16" fill="none"><path d="M2 8h20M14 2l6 6-6 6" stroke="rgba(240,234,224,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="24" height="16" viewBox="0 0 24 16" fill="none"><path d="M2 8h20M14 2l6 6-6 6" stroke="rgba(240,234,224,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
     </div>
   </div>
@@ -1634,7 +1634,7 @@ const projects = [
     sections: [
       { title: 'Project overview', text: 'Developed for a Branded Content course at ESCP Business School, this project addresses a critical health equity gap where millions of eligible children remain uninsured. Our team created a cinematic campaign for United Healthcare that was selected as one of the top finalists for submission to the Student Clio Health Awards. The initiative moves beyond awareness by providing a tangible solution to help families navigate the complex eligibility requirements of programs like CHIP.' },
       { title: 'Creative strategy & narrative', text: 'We developed a cinematic short film that uses a visual metaphor to represent the consequences of non-enrollment. The story follows eight-year-old Benjamin, who tries to pay for his cancer treatment with a piggy bank but finds himself unheard and unnoticed in a cold, bureaucratic system. This emotional narrative highlights a hidden reality: when families are unaware they qualify for support, their children effectively disappear from the healthcare system.' },
-      { title: 'Eligibility tool design', text: 'To ensure the transition from the film to the solution was seamless, we built the eligibility tool prototype to perfectly match the existing UnitedHealthcare website design. We prioritized clarity by using a classical form structure, including mandatory field asterisks and tooltips to explain why specific data is requested. The interface features helpful placeholders to clarify expected input, and we gave full control to the user, allowing them to navigate backward between questions or exit the form at any time.' },
+      { title: 'Eligibility tool design', text: 'To ensure the transition from the film to the solution was seamless, we built the eligibility tool prototype to perfectly match the existing UnitedHealthcare website design. To manage the website\'s multiple layers of information, we implemented breadcrumb navigation, allowing users to easily track their location and move back through previous pages. For enhanced accessibility, the interface includes a text-size adjustment tool and a clear language switcher at the top of the page. We prioritized clarity by using a classical form structure, including mandatory field asterisks and tooltips to explain why specific data is requested. The interface features helpful placeholders to clarify expected input, and we gave full control to the user, allowing them to navigate backward between questions or exit the form at any time.' },
       { title: 'Functionality & user empowerment', text: 'The prototype is fully dynamic, with results that change instantly based on the data provided by the user. To respect user privacy, we included an option to opt out of marketing communications. Once the assessment is complete, the user is presented with structured information including FAQs and direct contact options. The final screen offers clear paths to either begin the official application immediately or retake the test.' },
       { title: 'Media plan & impact', text: 'The campaign is set to launch on September 1st, 2026, to coincide with Childhood Cancer Awareness Month. We focused our geographic targeting on U.S. states with high uninsured rates, using high-impact OOH placements such as metro stations. This approach ensures repeated exposure in daily environments, supported by geo-targeted social media ads on TikTok and Instagram to lead families directly to our eligibility tool.' }
     ]
@@ -1679,7 +1679,7 @@ function openProject(idx) {
       <div class="detail-title">${p.title}</div>
       <div class="detail-type">${p.type}</div>
       <div class="detail-video"><video src="${p.video}" muted playsinline autoplay loop preload="metadata"></video></div>
-      ${p.link ? `<div class="detail-link-wrap"><a href="${p.link}" target="_blank" class="detail-link">${p.link}</a></div>` : ''}
+      ${p.link ? `<div class="detail-link-wrap"><span class="detail-link-row"><span class="detail-link-prefix">explore the website →</span><a href="${p.link}" target="_blank" class="detail-link">${p.link}</a></span></div>` : ''}
       ${p.sections.map(s => `
       <div class="detail-section">
         <div class="detail-section-title" style="--line-color:${p.color}">${s.title}</div>
