@@ -98,31 +98,8 @@ body.cursor-pill #cursor-ring { opacity: 0; }
 }
 
 /* BOTTOM NAV */
-#bottom-nav {
-  position: fixed;
-  bottom: 28px; left: 50%;
-  transform: translateX(-50%);
-  display: flex; gap: 20px; align-items: flex-end;
-  z-index: 1000;
-  opacity: 0; transition: opacity .6s;
-  pointer-events: none;
-}
-#bottom-nav.visible { opacity: 1; pointer-events: all; }
-.nav-circle { position: relative; width: 52px; height: 52px; cursor: none; }
-.nc-img { width: 100%; height: 100%; object-fit: contain; display: block;
-  transition: transform .3s cubic-bezier(.34,1.3,.64,1), opacity .3s; opacity: 0.7; }
-.nav-circle:hover .nc-img { transform: scale(1.15); opacity: 1; }
-.nav-circle.active .nc-img { opacity: 1; }
-.nav-label {
-  position: absolute;
-  bottom: calc(100% + 6px); left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-body); font-size: 10px;
-  color: var(--chalk); white-space: nowrap;
-  opacity: 0; transition: opacity .2s;
-  letter-spacing: .08em;
-}
-.nav-circle:hover .nav-label { opacity: 1; }
+
+
 @keyframes nav-wobble {
   0%,100% { transform: rotate(0deg) scale(1); }
   25% { transform: rotate(-8deg) scale(1.1); }
@@ -377,7 +354,7 @@ h1.hero-title {
   font-size: 15px; line-height: 1.8;
   color: var(--chalk-muted); margin-bottom: 28px;
   text-align: justify;
-  max-width: 220px;
+  max-width: 420px;
 }
 .about-bio strong { color: var(--chalk); font-weight: 500; }
 .about-photo {
@@ -852,6 +829,44 @@ h1.hero-title {
   color: var(--c-red);
   font-style: italic;
 }
+
+/* ── CHALK LINE NAV ── */
+#chalk-nav {
+  position: fixed;
+  bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 16px; align-items: flex-end;
+  z-index: 2000;
+  pointer-events: all;
+}
+.cln {
+  position: relative;
+  cursor: none;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 12px 6px;
+}
+.cln-bar {
+  display: block;
+  width: 36px; height: 6px;
+  border-radius: 3px;
+  transition: transform .2s cubic-bezier(.34,1.3,.64,1), opacity .2s;
+  opacity: 0.55;
+  /* chalk texture via SVG filter */
+  filter: url(#chalk);
+}
+.cln:hover .cln-bar { transform: scaleX(1.25) scaleY(1.4); opacity: 1; }
+.cln-label {
+  position: absolute;
+  bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body); font-size: 10px;
+  color: var(--chalk); letter-spacing: .1em; text-transform: uppercase;
+  white-space: nowrap; opacity: 0;
+  transition: opacity .2s;
+  pointer-events: none;
+}
+.cln:hover .cln-label { opacity: 1; }
+
 </style>
 </head>
 <body>
@@ -877,24 +892,7 @@ h1.hero-title {
 </svg>
 
 
-<nav id="bottom-nav">
-  <div class="nav-circle nav-img-btn" data-panel="0">
-    <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-bouquet.png" alt="home" class="nc-img">
-    <span class="nav-label">Home</span>
-  </div>
-  <div class="nav-circle nav-img-btn" data-panel="1">
-    <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-escalade.png" alt="works" class="nc-img">
-    <span class="nav-label">Works</span>
-  </div>
-  <div class="nav-circle nav-img-btn" data-panel="2">
-    <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-tourne-disque.png" alt="about" class="nc-img">
-    <span class="nav-label">About</span>
-  </div>
-  <div class="nav-circle nav-img-btn" data-panel="3">
-    <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/cercle-ordinateur.png" alt="contact" class="nc-img">
-    <span class="nav-label">Contact</span>
-  </div>
-</nav>
+
 
 <div id="scroll-container">
 <div class="panel" id="panel-hero">
@@ -1145,6 +1143,27 @@ h1.hero-title {
 </div>
 
 
+
+<!-- CHALK LINE NAV -->
+<div id="chalk-nav">
+  <div class="cln" id="cnav-0">
+    <span class="cln-label">Home</span>
+    <span class="cln-bar" style="background:#FF3D1F;"></span>
+  </div>
+  <div class="cln" id="cnav-1">
+    <span class="cln-label">Works</span>
+    <span class="cln-bar" style="background:#00B06C;"></span>
+  </div>
+  <div class="cln" id="cnav-2">
+    <span class="cln-label">About</span>
+    <span class="cln-bar" style="background:#FFD000;"></span>
+  </div>
+  <div class="cln" id="cnav-3">
+    <span class="cln-label">Contact</span>
+    <span class="cln-bar" style="background:#1A3FFF;"></span>
+  </div>
+</div>
+
 <!-- CHALK TRANSITION OVERLAY -->
 <div id="chalk-overlay"></div>
 
@@ -1305,15 +1324,6 @@ function checkPanelReveal(){
   if(currentX>=contactX-window.innerWidth*.5) document.getElementById('chalk-arrow')?.classList.add('show');
 }
 
-// NAV CLICKS
-document.querySelectorAll('.nav-circle').forEach(nc=>{
-  nc.addEventListener('click',()=>{
-    const idx=parseInt(nc.dataset.panel);
-    const targets=['panel-hero','panel-wave','panel-works','panel-about','panel-contact'];
-    const id=targets[idx];
-    if(id) targetX=Math.max(0,getPanelX(id));
-  });
-});
 
 // HERO CIRCLES
 const base = 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/';
@@ -1380,6 +1390,7 @@ function capturePositions() {
   });
 }
 
+function checkChalkLines() {}
 function animHeroToNav() {
   // Capture starting positions once (at currentX ≈ 0)
   if(!heroImgStartPos && currentX < 10) capturePositions();
@@ -1577,7 +1588,6 @@ function updateWaveEffect() {
 }
 
 // CHALK LINES check (now handled by updateWaveEffect)
-function checkChalkLines() {}
 
 // CHECKLIST
 const ilHint = document.getElementById('il-hint');
@@ -1717,6 +1727,20 @@ function closeProject() {
 }
 
 document.getElementById('detail-back').addEventListener('click', closeProject);
+
+// ── CHALK LINE NAV ──
+['cnav-0','cnav-1','cnav-2','cnav-3'].forEach((id, i) => {
+  const el = document.getElementById(id);
+  if(!el) return;
+  const panels = ['panel-hero','panel-works','panel-about','panel-contact'];
+  el.addEventListener('click', () => {
+    const target = document.getElementById(panels[i]);
+    if(target) { targetX = target.offsetLeft; }
+  });
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-open'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-open'));
+});
+
 
 </script>
 </body>
