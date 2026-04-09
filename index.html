@@ -337,11 +337,18 @@ h1.hero-title {
   display: flex; flex-direction: column; justify-content: center;
 }
 .about-right {
-  padding: 56px 72px 56px 44px;
-  display: flex; flex-direction: column; justify-content: center;
+  padding: 56px 44px 56px 44px;
+  display: flex; flex-direction: row; align-items: center; gap: 48px;
   overflow-y: auto; scrollbar-width: none;
 }
 .about-right::-webkit-scrollbar { display: none; }
+.about-checklist-col {
+  display: flex; flex-direction: column; justify-content: center; flex: 1;
+}
+.about-illus-col {
+  flex-shrink: 0; width: 220px;
+  display: flex; align-items: center;
+}
 
 .section-label {
   font-family: var(--font-display);
@@ -354,7 +361,7 @@ h1.hero-title {
   font-size: 15px; line-height: 1.8;
   color: var(--chalk-muted); margin-bottom: 28px;
   text-align: justify;
-  max-width: 420px;
+  max-width: 360px;
 }
 .about-bio strong { color: var(--chalk); font-weight: 500; }
 .about-photo {
@@ -1096,16 +1103,7 @@ h1.hero-title {
       </div>
     </div>
     <div class="about-right">
-      <div class="illus-frame" id="illus-frame">
-        <div id="il-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .4s;">
-          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/point-interrogation.png" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">
-        </div>
-        <img id="il0" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-1.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
-        <img id="il1" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-2.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
-        <img id="il2" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-3.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
-        <img id="il3" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-4.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
-        <img id="il4" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-5.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
-      </div>
+      <div class="about-checklist-col">
       <h3 class="checklist-title">What I bring</h3>
       <ul class="checklist" id="checklist">
         <li class="checklist-item" data-index="0"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Curious mind, fast learner<span class="strike-line"></span></span></li>
@@ -1115,6 +1113,19 @@ h1.hero-title {
         <li class="checklist-item" data-index="4"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Autonomous and proactive contributor<span class="strike-line"></span></span></li>
       </ul>
       <div class="cta-connect" id="cta-connect">Let's connect →</div>
+      </div><!-- end about-checklist-col -->
+      <div class="about-illus-col">
+        <div class="illus-frame" id="illus-frame">
+          <div id="il-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .4s;">
+            <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/point-interrogation.png" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:8px;">
+          </div>
+          <img id="il0" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-1.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
+          <img id="il1" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-2.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
+          <img id="il2" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-3.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
+          <img id="il3" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-4.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
+          <img id="il4" src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/what-i-bring-5.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .4s ease;">
+        </div>
+      </div><!-- end about-illus-col -->
     </div>
   </div>
 
@@ -1735,7 +1746,13 @@ document.getElementById('detail-back').addEventListener('click', closeProject);
   const panels = ['panel-hero','panel-works','panel-about','panel-contact'];
   el.addEventListener('click', () => {
     const target = document.getElementById(panels[i]);
-    if(target) { targetX = target.offsetLeft; }
+    if(target) {
+      const panelW = target.offsetWidth;
+      const viewW = window.innerWidth;
+      // Center narrow panels, left-align full-width panels
+      const offset = panelW < viewW ? Math.max(0, target.offsetLeft - (viewW - panelW) / 2) : target.offsetLeft;
+      targetX = offset;
+    }
   });
   el.addEventListener('mouseenter', () => document.body.classList.add('cursor-open'));
   el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-open'));
