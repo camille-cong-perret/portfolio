@@ -893,7 +893,7 @@ h1.hero-title {
   object-fit: cover; aspect-ratio: 16/9; background: #111;
 }
 .detail-media-2col img { object-fit: contain; aspect-ratio: auto; max-height: 240px; }
-/* Innocent project — keep media full-size */
+/* Innocent — keep media full-size */
 .detail-media-innocent { max-width: 100% !important; }
 .detail-media-innocent video { max-height: none !important; }
 .detail-media-innocent img { max-height: none !important; }
@@ -1696,9 +1696,9 @@ const projects = [
       { title: 'Creative strategy & narrative', text: 'We developed a cinematic short film that uses a visual metaphor to represent the consequences of non-enrollment. The story follows eight-year-old Benjamin, who tries to pay for his cancer treatment with a piggy bank but finds himself unheard and unnoticed in a cold, bureaucratic system. This emotional narrative highlights a hidden reality: when families are unaware they qualify for support, their children effectively disappear from the healthcare system.',
       media: '<div class="detail-media"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer1.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer2.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer3.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
       { title: 'Eligibility tool design', text: 'To ensure the transition from the film to the solution was seamless, we built the eligibility tool prototype to perfectly match the existing UnitedHealthcare website design. To manage the website\'s multiple layers of information, we implemented breadcrumb navigation, allowing users to easily track their location and move back through previous pages. For enhanced accessibility, the interface includes a text-size adjustment tool and a clear language switcher at the top of the page. We prioritized clarity by using a classical form structure, including mandatory field asterisks and tooltips to explain why specific data is requested. The interface features helpful placeholders to clarify expected input, and we gave full control to the user, allowing them to navigate backward between questions or exit the form at any time.',
-      media: '<div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-video-consent.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
-      { title: 'Functionality & user empowerment', text: 'The prototype is fully dynamic, with results that change instantly based on the data provided by the user. To respect user privacy, we included an option to opt out of marketing communications. Once the assessment is complete, the user is presented with structured information including FAQs and direct contact options. The final screen offers clear paths to either begin the official application immediately or retake the test.',
       media: '<div class="detail-media detail-media-full"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-media.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;max-height:360px;"></div>' },
+      { title: 'Functionality & user empowerment', text: 'The prototype is fully dynamic, with results that change instantly based on the data provided by the user. To respect user privacy, we included an option to opt out of marketing communications. Once the assessment is complete, the user is presented with structured information including FAQs and direct contact options. The final screen offers clear paths to either begin the official application immediately or retake the test.',
+      media: '<div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-video-consent.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
       { title: 'Media plan & impact', text: 'The campaign is set to launch on September 1st, 2026, to coincide with Childhood Cancer Awareness Month. We focused our geographic targeting on U.S. states with high uninsured rates, using high-impact OOH placements such as metro stations. This approach ensures repeated exposure in daily environments, supported by geo-targeted social media ads on TikTok and Instagram to lead families directly to our eligibility tool.' }
     ]
   },
@@ -1775,4 +1775,9 @@ document.getElementById('detail-back').addEventListener('click', closeProject);
   const panels = ['panel-hero','panel-works','panel-about','panel-contact'];
   el.addEventListener('click', () => {
     const target = document.getElementById(panels[i]);
-    if(t
+    if(target) targetX = target.offsetLeft;
+  });
+});
+</script>
+</body>
+</html>
