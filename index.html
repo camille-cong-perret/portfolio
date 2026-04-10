@@ -69,7 +69,8 @@ body::before {
   transition: width .25s, height .25s, opacity .2s;
 }
 body.cursor-open #cursor-ring { width: 44px; height: 44px; }
-body.cursor-pill #cursor-dot {
+body.cursor-pill #cursor-dot,
+body.cursor-fullscreen #cursor-dot {
   width: auto; height: auto;
   background: var(--chalk);
   border-radius: 20px;
@@ -80,6 +81,7 @@ body.cursor-pill #cursor-dot {
   white-space: nowrap;
 }
 body.cursor-pill #cursor-ring { opacity: 0; }
+body.cursor-fullscreen #cursor-ring { opacity: 0; }
 
 /* PROGRESS BAR */
 #progress-bar {
@@ -876,23 +878,62 @@ h1.hero-title {
 .cln:hover .cln-label { opacity: 1; }
 
 
+/* FULLSCREEN LIGHTBOX */
+#fs-overlay {
+  position: fixed; inset: 0; z-index: 99100;
+  background: rgba(0,0,0,0.96);
+  display: none; align-items: center; justify-content: center;
+  cursor: none;
+}
+#fs-overlay.show { display: flex; }
+#fs-close {
+  position: fixed; top: 28px; right: 36px;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgba(240,234,224,0.4);
+  border-radius: 50%;
+  font-size: 18px; color: var(--chalk);
+  background: none; cursor: none; z-index: 99101;
+  transition: border-color .2s;
+}
+#fs-close:hover { border-color: var(--chalk); }
+#fs-content { display: flex; align-items: center; justify-content: center; }
+#fs-content img { max-width: 88vw; max-height: 88vh; object-fit: contain; border-radius: 8px; display: block; }
+#fs-content video { max-width: 88vw; max-height: 88vh; object-fit: contain; border-radius: 8px; display: block; }
+
+/* LA PIVOINE ALTERNATING LAYOUT */
+.cs-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
+  max-width: 88%; margin: 0 auto 80px;
+  align-items: center;
+}
+.cs-row-text .detail-section-title { justify-content: flex-start; margin-bottom: 14px; }
+.cs-row-text .detail-section-title::before { display: none; }
+.cs-row-text .detail-text { text-align: left; }
+.cs-row-media { display: flex; flex-direction: column; gap: 12px; }
+.cs-row-media img, .cs-row-media video {
+  width: 100%; border-radius: 8px; display: block;
+  object-fit: contain;
+}
+
 /* CASE STUDY MEDIA */
 .detail-media { margin: 72px auto 96px; max-width: 88%; }
 .detail-media-full video,
 .detail-media-full img {
   width: 100%; border-radius: 8px; display: block;
 }
-.detail-media-full video { aspect-ratio: 16/9; object-fit: cover; background:#111; max-height: 420px; }
-.detail-media-full img { max-height: 360px; object-fit: contain; }
+.detail-media-full video { object-fit: contain; background:#111; max-height: 400px; display: block; }
+.detail-media-full img { max-height: 400px; object-fit: contain; }
 .detail-media-2col {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: center;
 }
 .detail-media-2col video,
 .detail-media-2col img {
   width: 100%; border-radius: 8px; display: block;
-  object-fit: cover; aspect-ratio: 16/9; background: #111;
+  object-fit: contain; background: #111;
 }
-.detail-media-2col img { object-fit: contain; aspect-ratio: auto; max-height: 240px; }
+.detail-media-2col img,
+.detail-media-2col video { max-height: 260px; }
 /* Innocent — keep media full-size */
 .detail-media-innocent { max-width: 100% !important; }
 .detail-media-innocent video { max-height: none !important; }
@@ -1207,6 +1248,12 @@ h1.hero-title {
     <span class="cln-label">Contact</span>
     <span class="cln-bar" style="background:#1A3FFF;"></span>
   </div>
+</div>
+
+<!-- FULLSCREEN LIGHTBOX -->
+<div id="fs-overlay">
+  <button id="fs-close">✕</button>
+  <div id="fs-content"></div>
 </div>
 
 <!-- CHALK TRANSITION OVERLAY -->
@@ -1677,11 +1724,11 @@ const projects = [
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-alinea.mp4',
     sections: [
       { title: 'Project overview', text: 'As part of my Master\'s at ESCP Business School, my team developed Alinea, a copywriting agency website built from scratch. Moving away from standard corporate aesthetics, we aimed for a bold, editorial look using Elementor and vibe coding instead of templates. Our goal was to create a high-energy, interactive MVP that proves B2B services can be both creative and professional.',
-      media: '<div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-sticky-services.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
+      media: '<div class="detail-media detail-media-full" style="max-width:88%;margin:72px auto 96px;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-sticky-services.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;display:block;background:#111;"></video></div>' },
       { title: 'Strategic navigation & UX', text: 'We prioritized a Desktop-First approach, specifically targeting B2B professionals (CEOs, Marketing Directors and Consultants) who vet agencies during work hours on laptops. To ensure a frictionless experience on a high-interaction site, we implemented a sticky header and scroll-to-top buttons for constant access to navigation. Each service page follows a consistent logic: we do not just list tasks, we showcase our philosophy and specific KPIs to align with client business goals.',
-      media: '<div class="detail-media detail-media-2col"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-portfolio.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-wireframes.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-cursor-scroll.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-wireframes.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
       { title: 'Evolution from wireframes', text: 'The project began with a structured content tree and Figma wireframes, though the final build evolved significantly. By building without templates, we explored new interaction and design possibilities that were not in our initial sketches, such as a personalized cursor that adapts to the editorial style. This cursor changes contextually to guide the user: it transforms to display the word \'Explore\' under the hero header to encourage discovery, and switches to \'Scroll\' in the portfolio section to clearly indicate the expected action. In addition, we focused heavily on accessibility, maintaining high color contrast and accurate alt-descriptions to ensure the bold design remained inclusive and easy to read.',
-      media: '<div class="detail-media detail-media-2col"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-image-scroll.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-data.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
+      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-data.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/alinea-video-image-scroll.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;display:block;object-fit:contain;background:#111;"></video></div>' },
       { title: 'Validation & future scaling', text: 'To ensure the site was intuitive, we conducted user testing with 10 participants using think-aloud interviews. This allowed us to identify and fix minor navigation friction points before launch. More importantly, the testing highlighted a key challenge for the future: as we scale the MVP and add more pages, we will need to be careful to maintain this clarity and ensure the navigation does not become cluttered as the site grows.' }
     ]
   },
@@ -1694,11 +1741,11 @@ const projects = [
       { title: 'Project overview', text: 'Developed for a Branded Content course at ESCP Business School, this project addresses a critical health equity gap where millions of eligible children remain uninsured. Our team created a cinematic campaign for United Healthcare that was selected as one of the top finalists for submission to the Student Clio Health Awards. The initiative moves beyond awareness by providing a tangible solution to help families navigate the complex eligibility requirements of programs like CHIP.',
       media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-state.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-child.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
       { title: 'Creative strategy & narrative', text: 'We developed a cinematic short film that uses a visual metaphor to represent the consequences of non-enrollment. The story follows eight-year-old Benjamin, who tries to pay for his cancer treatment with a piggy bank but finds himself unheard and unnoticed in a cold, bureaucratic system. This emotional narrative highlights a hidden reality: when families are unaware they qualify for support, their children effectively disappear from the healthcare system.',
-      media: '<div class="detail-media"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer1.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer2.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer3.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      media: '<div class="detail-media"><div class="detail-media-2col" style="margin-bottom:16px;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer1.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer2.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer3.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;max-height:260px;"></div>' },
       { title: 'Eligibility tool design', text: 'To ensure the transition from the film to the solution was seamless, we built the eligibility tool prototype to perfectly match the existing UnitedHealthcare website design. To manage the website\'s multiple layers of information, we implemented breadcrumb navigation, allowing users to easily track their location and move back through previous pages. For enhanced accessibility, the interface includes a text-size adjustment tool and a clear language switcher at the top of the page. We prioritized clarity by using a classical form structure, including mandatory field asterisks and tooltips to explain why specific data is requested. The interface features helpful placeholders to clarify expected input, and we gave full control to the user, allowing them to navigate backward between questions or exit the form at any time.',
-      media: '<div class="detail-media detail-media-full"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-media.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;max-height:360px;"></div>' },
+      media: '<div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-video-consent.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;display:block;object-fit:contain;background:#111;max-height:400px;"></video></div>' },
       { title: 'Functionality & user empowerment', text: 'The prototype is fully dynamic, with results that change instantly based on the data provided by the user. To respect user privacy, we included an option to opt out of marketing communications. Once the assessment is complete, the user is presented with structured information including FAQs and direct contact options. The final screen offers clear paths to either begin the official application immediately or retake the test.',
-      media: '<div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-video-consent.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
+      media: '<div class="detail-media detail-media-full"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-media.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;max-height:400px;"></div>' },
       { title: 'Media plan & impact', text: 'The campaign is set to launch on September 1st, 2026, to coincide with Childhood Cancer Awareness Month. We focused our geographic targeting on U.S. states with high uninsured rates, using high-impact OOH placements such as metro stations. This approach ensures repeated exposure in daily environments, supported by geo-targeted social media ads on TikTok and Instagram to lead families directly to our eligibility tool.' }
     ]
   },
@@ -1711,7 +1758,7 @@ const projects = [
       { title: 'Project overview', text: 'This experimental project focuses on "The Big Knit," an annual campaign by Innocent drinks where smoothies are sold with tiny, hand-knitted hats. For every hatted smoothie purchased, a portion of the proceeds helps the association Petits Frères des Pauvres provide fruits and vegetables to isolated elderly people. My goal was to design a vending machine interface that replicates the tactile, personalized experience of shopping.',
       media: '<div class="detail-media detail-media-2col detail-media-innocent"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-pre-selection.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-selection.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
       { title: 'Seamless selection strategy', text: 'The core of the experience is a consolidated selection screen that displays both smoothie flavors and hat designs simultaneously, enabling users to visually match their choices. To minimize friction and cognitive load, I implemented a dynamic highlighting system where selecting an item adds a vibrant color contour while subtly dimming unselected options. The interface uses a conditional "Pay" button that remains inactive and grayed out until both a smoothie and a hat are selected.',
-      media: '<div class="detail-media detail-media-2col detail-media-innocent"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-recap.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-video-tricotage.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
+      media: '<div class="detail-media detail-media-2col detail-media-innocent"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-recap.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-video-tricotage.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;display:block;object-fit:contain;background:#111;"></video></div>' },
       { title: 'Order finalization & social impact', text: 'The final phase of the journey includes a concise order recap and integrated payment method selection to keep the transaction fast and efficient. To maintain the brand&#39;s playful tone, I replaced standard technical loading messages with thematic "knitting in progress" text during payment processing. Upon completion, a ready-to-go screen confirms the donation to Petits Frères des Pauvres, reinforcing the social purpose behind the purchase.' }
     ]
   },
@@ -1720,6 +1767,7 @@ const projects = [
     color: '#FFD000',
     type: 'Mobile UX',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-la-pivoine.mov',
+    body: '<div class=\"detail-section\"><div class=\"detail-section-title\" style=\"--line-color:#FFD000\">Project overview</div><p class=\"detail-text\">La Pivoine is a flower shop project focused on modernizing the traditional customer retention experience. Physical loyalty cards are often lost or forgotten, especially for occasional purchases like flowers. To solve this, I designed a digital loyalty card integrated directly into the smartphone\</p></div><div class=\"cs-row\"><div class=\"cs-row-text\"><div class=\"detail-section-title\" style=\"--line-color:#FFD000\">Interactive wallet design</div><p class=\"detail-text\">The prototype, framed on an iPhone 16 interface, mimics the native wallet experience to ensure user familiarity. Upon selecting the La Pivoine card, the user sees the brand name and a clear progress indicator showing their number of visits out of nine. The design recreates the nostalgia of a paper card with ten circles representing stamps, positioned above a functional QR code. This layout provides all necessary information at a single glance, including the specific incentive of a free bouquet on the tenth visit.</p></div><div class=\"cs-row-media\"><img src=\"https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-wallet.png\" style=\"width:100%;border-radius:8px;display:block;object-fit:contain;\"><img src=\"https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-card.png\" style=\"width:100%;border-radius:8px;display:block;object-fit:contain;\"></div></div><div class=\"cs-row\"><div class=\"cs-row-media\"><img src=\"https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-stamp3.png\" style=\"width:100%;border-radius:8px;display:block;object-fit:contain;\"><img src=\"https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-stamp9.png\" style=\"width:100%;border-radius:8px;display:block;object-fit:contain;\"></div><div class=\"cs-row-text\"><div class=\"detail-section-title\" style=\"--line-color:#FFD000\">Gamified information flow</div><p class=\"detail-text\">The core interaction occurs at the point of sale: when the shop owner scans the QR code, a circle digitally transforms into a flower stamp. This visual update provides immediate gratification by mirroring the tactile feel of a physical stamp through a seamless digital interface. Once nine stamps are collected, the tenth circle changes into a gift stamp, triggering a celebratory pop-up.</p></div></div><div class=\"detail-section\"><div class=\"detail-section-title\" style=\"--line-color:#FFD000\">Driving conversion with navigation</div><p class=\"detail-text\">To translate digital success into a store visit, the "free bouquet" pop-up includes a direct call-to-action button that opens a Google Maps link to the shop. By integrating navigation directly into the reward screen, I created a frictionless path for the user to claim their gift. This design completes a full circle, starting with a digital interaction in the wallet and ending with the customer standing in the shop to receive their flowers.</p></div>',
     sections: [
       { title: 'Project overview', text: 'La Pivoine is a flower shop project focused on modernizing the traditional customer retention experience. Physical loyalty cards are often lost or forgotten, especially for occasional purchases like flowers. To solve this, I designed a digital loyalty card integrated directly into the smartphone\'s wallet application. This transition from physical to digital ensures the card is always accessible while allowing the business to gather more consistent data.',
       media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-wallet.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/lapivoine-card.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
@@ -1744,7 +1792,7 @@ function openProject(idx) {
       <div class="detail-type">${p.type}</div>
       <div class="detail-video"><video src="${p.video}" muted playsinline autoplay loop preload="metadata"></video></div>
       ${p.link ? `<div class="detail-link-wrap"><span class="detail-link-row"><span class="detail-link-prefix">explore the website →</span><a href="${p.link}" target="_blank" class="detail-link">${p.link}</a></span></div>` : ''}
-      ${p.sections.map((s,si) => `
+      ${p.body ? p.body : p.sections.map((s,si) => `
       <div class="detail-section">
         <div class="detail-section-title" style="--line-color:${p.color}">${s.title}</div>
         <p class="detail-text">${s.text}</p>
@@ -1767,6 +1815,61 @@ function closeProject() {
 }
 
 document.getElementById('detail-back').addEventListener('click', closeProject);
+
+// ── FULLSCREEN LIGHTBOX ──
+const fsOverlay = document.getElementById('fs-overlay');
+const fsContent = document.getElementById('fs-content');
+const fsClose = document.getElementById('fs-close');
+
+function openFullscreen(el) {
+  fsContent.innerHTML = '';
+  let node;
+  if(el.tagName === 'VIDEO') {
+    node = document.createElement('video');
+    node.src = el.src || (el.querySelector('source') && el.querySelector('source').src) || el.currentSrc;
+    node.muted = false; node.controls = true; node.autoplay = true;
+    node.loop = true; node.playsInline = true;
+  } else {
+    node = document.createElement('img');
+    node.src = el.src; node.alt = el.alt || '';
+  }
+  node.style.cssText = 'max-width:88vw;max-height:88vh;object-fit:contain;border-radius:8px;display:block;';
+  fsContent.appendChild(node);
+  fsOverlay.classList.add('show');
+  if(node.tagName === 'VIDEO') node.play().catch(function(){});
+}
+
+function closeFullscreen() {
+  fsOverlay.classList.remove('show');
+  var v = fsContent.querySelector('video');
+  if(v) v.pause();
+  setTimeout(function(){ fsContent.innerHTML = ''; }, 200);
+}
+
+fsClose.addEventListener('click', closeFullscreen);
+fsOverlay.addEventListener('click', function(e){ if(e.target === fsOverlay) closeFullscreen(); });
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeFullscreen(); });
+
+var detailEl = document.getElementById('detail-content');
+detailEl.addEventListener('mouseover', function(e){
+  if(e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO'){
+    document.body.classList.add('cursor-fullscreen');
+    dot.textContent = 'full screen';
+  }
+});
+detailEl.addEventListener('mouseout', function(e){
+  if(e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO'){
+    document.body.classList.remove('cursor-fullscreen');
+    dot.textContent = '';
+  }
+});
+detailEl.addEventListener('click', function(e){
+  if(e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO'){
+    openFullscreen(e.target);
+  }
+});
+fsClose.addEventListener('mouseenter', function(){ document.body.classList.add('cursor-open'); });
+fsClose.addEventListener('mouseleave', function(){ document.body.classList.remove('cursor-open'); });
 
 // ── CHALK LINE NAV ──
 ['cnav-0','cnav-1','cnav-2','cnav-3'].forEach((id, i) => {
