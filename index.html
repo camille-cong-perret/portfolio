@@ -683,7 +683,7 @@ h1.hero-title {
   border-radius: 8px; display: flex; align-items: center; justify-content: center;
   color: var(--chalk-dim); font-size: 13px; margin-bottom: 56px;
 }
-.detail-section { margin-bottom: 44px; max-width: 50%; margin-left: auto; margin-right: auto; text-align: center; }
+.detail-section { margin-bottom: 44px; max-width: 72%; margin-left: auto; margin-right: auto; text-align: center; }
 .detail-section-title {
   font-family: var(--font-display); font-weight: 700; font-size: 22px;
   color: var(--chalk); margin-bottom: 14px;
@@ -792,7 +792,7 @@ h1.hero-title {
   margin-bottom: 60px; overflow: hidden;
 }
 .detail-video video { width:100%; height:100%; object-fit:cover; display:block; }
-.detail-section { margin-bottom: 44px; max-width: 50%; margin-left: auto; margin-right: auto; text-align: center; }
+.detail-section { margin-bottom: 44px; max-width: 72%; margin-left: auto; margin-right: auto; text-align: center; }
 .detail-section-title {
   font-family: var(--font-display); font-weight: 700;
   font-size: 22px; color: var(--chalk); margin-bottom: 14px;
@@ -877,13 +877,13 @@ h1.hero-title {
 
 
 /* CASE STUDY MEDIA */
-.detail-media { margin: 32px auto 44px; max-width: 100%; }
+.detail-media { margin: 72px auto 96px; max-width: 88%; }
 .detail-media-full video,
 .detail-media-full img {
   width: 100%; border-radius: 8px; display: block;
 }
-.detail-media-full video { aspect-ratio: 16/9; object-fit: cover; background:#111; }
-.detail-media-full img { max-height: 520px; object-fit: contain; }
+.detail-media-full video { aspect-ratio: 16/9; object-fit: cover; background:#111; max-height: 420px; }
+.detail-media-full img { max-height: 360px; object-fit: contain; }
 .detail-media-2col {
   display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
 }
@@ -892,7 +892,12 @@ h1.hero-title {
   width: 100%; border-radius: 8px; display: block;
   object-fit: cover; aspect-ratio: 16/9; background: #111;
 }
-.detail-media-2col img { object-fit: contain; aspect-ratio: auto; max-height: 360px; }
+.detail-media-2col img { object-fit: contain; aspect-ratio: auto; max-height: 240px; }
+/* Innocent project — keep media full-size */
+.detail-media-innocent { max-width: 100% !important; }
+.detail-media-innocent video { max-height: none !important; }
+.detail-media-innocent img { max-height: none !important; }
+
 .detail-media-grid23 {
   display: grid; gap: 16px;
 }
@@ -1170,7 +1175,7 @@ h1.hero-title {
       <span style="font-size:13px;color:rgba(240,234,224,0.36);font-style:italic;font-family:var(--font-body)">get in touch</span>
     </div>
     <div class="contact-email-wrap panel-reveal" style="transition-delay:.1s">
-      <a href="mailto:camillecong.ccg@gmail.com" class="contact-email">CAMILLECONG.CCG@GMAIL.COM</a>
+      <a href="/cdn-cgi/l/email-protection#2b484a464247474e4844454c0548484c6b4c464a424705484446" class="contact-email"><span class="__cf_email__" data-cfemail="91d2d0dcd8ddddd4d2dedfd6bfd2d2d6d1d6dcd0d8ddbfd2dedc">[email&#160;protected]</span></a>
       <div class="email-underline"></div>
     </div>
     <div class="contact-links panel-reveal" style="transition-delay:.2s;display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
@@ -1216,7 +1221,7 @@ h1.hero-title {
   <div id="detail-content"></div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // PROJECT DATA
 // projects defined below
 
@@ -1687,12 +1692,13 @@ const projects = [
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-united-healthcare.mp4',
     sections: [
       { title: 'Project overview', text: 'Developed for a Branded Content course at ESCP Business School, this project addresses a critical health equity gap where millions of eligible children remain uninsured. Our team created a cinematic campaign for United Healthcare that was selected as one of the top finalists for submission to the Student Clio Health Awards. The initiative moves beyond awareness by providing a tangible solution to help families navigate the complex eligibility requirements of programs like CHIP.',
-      media: '<div class="detail-media detail-media-full"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-homepage.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;max-height:520px;"></div>' },
-      { title: 'Creative strategy & narrative', text: 'We developed a cinematic short film that uses a visual metaphor to represent the consequences of non-enrollment. The story follows eight-year-old Benjamin, who tries to pay for his cancer treatment with a piggy bank but finds himself unheard and unnoticed in a cold, bureaucratic system. This emotional narrative highlights a hidden reality: when families are unaware they qualify for support, their children effectively disappear from the healthcare system.' },
+      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-state.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-child.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      { title: 'Creative strategy & narrative', text: 'We developed a cinematic short film that uses a visual metaphor to represent the consequences of non-enrollment. The story follows eight-year-old Benjamin, who tries to pay for his cancer treatment with a piggy bank but finds himself unheard and unnoticed in a cold, bureaucratic system. This emotional narrative highlights a hidden reality: when families are unaware they qualify for support, their children effectively disappear from the healthcare system.',
+      media: '<div class="detail-media"><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer1.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer2.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer3.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
       { title: 'Eligibility tool design', text: 'To ensure the transition from the film to the solution was seamless, we built the eligibility tool prototype to perfectly match the existing UnitedHealthcare website design. To manage the website\'s multiple layers of information, we implemented breadcrumb navigation, allowing users to easily track their location and move back through previous pages. For enhanced accessibility, the interface includes a text-size adjustment tool and a clear language switcher at the top of the page. We prioritized clarity by using a classical form structure, including mandatory field asterisks and tooltips to explain why specific data is requested. The interface features helpful placeholders to clarify expected input, and we gave full control to the user, allowing them to navigate backward between questions or exit the form at any time.',
-      media: '<div class="detail-media"><div class="detail-media-grid23"><div class="row2"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-state.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-child.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div><div class="row3"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer1.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer2.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-answer3.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div></div></div>' },
-      { title: 'Functionality & user empowerment', text: 'The prototype is fully dynamic, with results that change instantly based on the data provided by the user. To respect user privacy, we included an option to opt out of marketing communications. Once the assessment is complete, the user is presented with structured information including FAQs and direct contact options. The final screen offers clear paths to either begin the official application immediately or retake the test.',
       media: '<div class="detail-media detail-media-full"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-video-consent.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
+      { title: 'Functionality & user empowerment', text: 'The prototype is fully dynamic, with results that change instantly based on the data provided by the user. To respect user privacy, we included an option to opt out of marketing communications. Once the assessment is complete, the user is presented with structured information including FAQs and direct contact options. The final screen offers clear paths to either begin the official application immediately or retake the test.',
+      media: '<div class="detail-media detail-media-full"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/unitedhealthcare-media.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;max-height:360px;"></div>' },
       { title: 'Media plan & impact', text: 'The campaign is set to launch on September 1st, 2026, to coincide with Childhood Cancer Awareness Month. We focused our geographic targeting on U.S. states with high uninsured rates, using high-impact OOH placements such as metro stations. This approach ensures repeated exposure in daily environments, supported by geo-targeted social media ads on TikTok and Instagram to lead families directly to our eligibility tool.' }
     ]
   },
@@ -1703,9 +1709,9 @@ const projects = [
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-innocent.mp4',
     sections: [
       { title: 'Project overview', text: 'This experimental project focuses on "The Big Knit," an annual campaign by Innocent drinks where smoothies are sold with tiny, hand-knitted hats. For every hatted smoothie purchased, a portion of the proceeds helps the association Petits Frères des Pauvres provide fruits and vegetables to isolated elderly people. My goal was to design a vending machine interface that replicates the tactile, personalized experience of shopping.',
-      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-pre-selection.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-selection.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
+      media: '<div class="detail-media detail-media-2col detail-media-innocent"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-pre-selection.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-selection.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"></div>' },
       { title: 'Seamless selection strategy', text: 'The core of the experience is a consolidated selection screen that displays both smoothie flavors and hat designs simultaneously, enabling users to visually match their choices. To minimize friction and cognitive load, I implemented a dynamic highlighting system where selecting an item adds a vibrant color contour while subtly dimming unselected options. The interface uses a conditional "Pay" button that remains inactive and grayed out until both a smoothie and a hat are selected.',
-      media: '<div class="detail-media detail-media-2col"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-recap.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-video-tricotage.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
+      media: '<div class="detail-media detail-media-2col detail-media-innocent"><img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-recap.png" style="width:100%;border-radius:8px;display:block;object-fit:contain;"><video src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/innocent-video-tricotage.mov" muted playsinline autoplay loop preload="metadata" style="width:100%;border-radius:8px;aspect-ratio:16/9;object-fit:cover;background:#111;display:block;"></video></div>' },
       { title: 'Order finalization & social impact', text: 'The final phase of the journey includes a concise order recap and integrated payment method selection to keep the transaction fast and efficient. To maintain the brand&#39;s playful tone, I replaced standard technical loading messages with thematic "knitting in progress" text during payment processing. Upon completion, a ready-to-go screen confirms the donation to Petits Frères des Pauvres, reinforcing the social purpose behind the purchase.' }
     ]
   },
@@ -1732,12 +1738,8 @@ const detailContent = document.getElementById('detail-content');
 
 function openProject(idx) {
   const p = projects[idx];
-  document.body.style.overflow = 'hidden'; // keep body hidden, detail handles own scroll
-  // Chalk wipe in
-  chalkOverlay.classList.remove('leaving');
-  chalkOverlay.classList.add('entering');
-  setTimeout(() => {
-    detailContent.innerHTML = `
+  document.body.style.overflow = 'hidden';
+  detailContent.innerHTML = `
       <div class="detail-title">${p.title}</div>
       <div class="detail-type">${p.type}</div>
       <div class="detail-video"><video src="${p.video}" muted playsinline autoplay loop preload="metadata"></video></div>
@@ -1751,30 +1753,17 @@ function openProject(idx) {
         <button class="detail-nav-btn" onclick="openProject((${idx}+3)%4); projectDetail.scrollTop=0;">← Previous project</button>
         <button class="detail-nav-btn" onclick="openProject((${idx}+1)%4); projectDetail.scrollTop=0;">Next project →</button>
       </div>`;
-    projectDetail.scrollTop = 0;
-    projectDetail.classList.add('show');
-    setTimeout(() => projectDetail.classList.add('visible'), 30);
-    // Chalk wipe out
-    chalkOverlay.classList.remove('entering');
-    chalkOverlay.classList.add('leaving');
-    setTimeout(() => chalkOverlay.classList.remove('leaving'), 600);
-  }, 420);
+  projectDetail.scrollTop = 0;
+  projectDetail.classList.add('show');
+  setTimeout(() => projectDetail.classList.add('visible'), 20);
 }
 
 function closeProject() {
-  chalkOverlay.classList.remove('leaving');
-  chalkOverlay.classList.add('entering');
-  setTimeout(() => {
-    projectDetail.classList.remove('visible');
-    setTimeout(() => projectDetail.classList.remove('show'), 350);
-    chalkOverlay.classList.remove('entering');
-    chalkOverlay.classList.add('leaving');
-    setTimeout(() => chalkOverlay.classList.remove('leaving'), 600);
-    document.body.style.overflow = '';
-    // Scroll to works section
-    const worksPanel = document.getElementById('panel-works');
-    if(worksPanel) targetX = worksPanel.offsetLeft;
-  }, 400);
+  projectDetail.classList.remove('visible');
+  setTimeout(() => projectDetail.classList.remove('show'), 350);
+  document.body.style.overflow = '';
+  const worksPanel = document.getElementById('panel-works');
+  if(worksPanel) targetX = worksPanel.offsetLeft;
 }
 
 document.getElementById('detail-back').addEventListener('click', closeProject);
@@ -1786,13 +1775,4 @@ document.getElementById('detail-back').addEventListener('click', closeProject);
   const panels = ['panel-hero','panel-works','panel-about','panel-contact'];
   el.addEventListener('click', () => {
     const target = document.getElementById(panels[i]);
-    if(target) { targetX = target.offsetLeft; }
-  });
-  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-open'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-open'));
-});
-
-
-</script>
-</body>
-</html>
+    if(t
