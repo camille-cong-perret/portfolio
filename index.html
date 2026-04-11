@@ -784,7 +784,7 @@ h1.hero-title {
 }
 .detail-type {
   font-size: 13px; color: var(--chalk-muted);
-  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 48px;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;
 }
 .detail-video {
   width: 100%; aspect-ratio: 16/9;
@@ -946,7 +946,7 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 .detail-tool {
   font-family: var(--font-body); font-size: 12px;
   color: var(--chalk-muted); letter-spacing: 0.12em;
-  text-transform: lowercase; margin-bottom: 44px;
+  text-transform: lowercase; margin-bottom: 48px;
   opacity: 0.7;
 }
 
@@ -1323,6 +1323,12 @@ let waveTriggered = false;
   currentX+=(targetX-currentX)*0.09;
   if(Math.abs(targetX-currentX)<0.05) currentX=targetX;
   container.style.transform=`translateX(${-currentX}px)`;
+  // Hero hint: show only when at home (currentX < 30), hide once scrolled
+  const hint = document.getElementById('hero-hint');
+  if(hint) {
+    if(currentX < 30) { hint.classList.add('show'); }
+    else { hint.classList.remove('show'); }
+  }
   updateProgress();
   updateNav();
   checkPanelReveal();
@@ -1750,7 +1756,7 @@ const projects = [
     title: 'Innocent',
     color: '#00B06C',
     tool: 'made with figma design',
-    type: 'Interaction Design',
+    type: 'Interaction Design for a Vending Machine',
     video: 'https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/video-innocent.mp4',
     sections: [
       { title: 'Project overview', text: 'This experimental project focuses on "The Big Knit," an annual campaign by Innocent drinks where smoothies are sold with tiny, hand-knitted hats. For every hatted smoothie purchased, a portion of the proceeds helps the association Petits Frères des Pauvres provide fruits and vegetables to isolated elderly people. My goal was to design a vending machine interface that replicates the tactile, personalized experience of shopping.',
