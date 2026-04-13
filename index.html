@@ -335,7 +335,7 @@ h1.hero-title {
 }
 .about-left {
   padding: 40px 12px 40px 72px;
-  display: flex; flex-direction: row; align-items: flex-start; gap: 20px;
+  display: flex; flex-direction: column; justify-content: center;
 }
 .about-text-col {
   display: flex; flex-direction: column; justify-content: center; width: fit-content;
@@ -343,7 +343,7 @@ h1.hero-title {
 /* about-portrait-col removed — portrait now inside about-left **/
 .about-right {
   padding: 40px 72px 40px 80px;
-  display: flex; flex-direction: row; align-items: flex-start; gap: 20px;
+  display: flex; flex-direction: column; justify-content: center;
 }
 .about-right::-webkit-scrollbar { display: none; }
 .about-checklist-col {
@@ -1142,37 +1142,35 @@ body.cursor-fullscreen #cursor-ring { opacity:0; }
 <div class="panel" id="panel-about">
     <!-- LEFT: About text + portrait side by side -->
     <div class="about-left">
-      <div class="about-text-col">
-        <div class="section-label panel-reveal">About</div>
-        <p class="about-bio panel-reveal" style="transition-delay:.1s">
+      <div class="section-label panel-reveal">About</div>
+      <div style="display:flex;flex-direction:row;align-items:flex-end;gap:20px;">
+        <p class="about-bio panel-reveal" style="transition-delay:.1s;margin:0;">
           Through marketing and communication, I built a sensitivity to design and user journeys. I am now dedicated to bringing ideas to life, whether I am crafting high-fidelity prototypes in Figma or experimenting with vibe coding. I am eager to join a team where I can apply this hands-on energy to real-world product challenges.
         </p>
-        <div class="lang-tags panel-reveal" style="transition-delay:.2s;margin-top:14px;flex-wrap:nowrap;">
-          <span class="lang-tag">French - native</span>
-          <span class="lang-tag">English - C1 (TOEIC 980)</span>
+        <div class="about-photo panel-reveal" style="transition-delay:.15s;width:200px;flex-shrink:0;aspect-ratio:1/1;">
+          <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/portrait-craie.png"
+               alt="Camille Cong-Perret"
+               onerror="this.style.display='none';"
+               style="width:100%;height:100%;object-fit:cover;">
         </div>
       </div>
-      <div class="about-photo panel-reveal" style="transition-delay:.15s;width:200px;flex-shrink:0;aspect-ratio:1/1;margin-top:48px;">
-        <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/portrait-craie.png"
-             alt="Camille Cong-Perret"
-             onerror="this.style.display='none';"
-             style="width:100%;height:100%;object-fit:cover;">
+      <div class="lang-tags panel-reveal" style="transition-delay:.2s;margin-top:14px;flex-wrap:nowrap;">
+        <span class="lang-tag">French - native</span>
+        <span class="lang-tag">English - C1 (TOEIC 980)</span>
       </div>
     </div>
     <!-- RIGHT: What I bring -->
     <div class="about-right">
-      <div class="about-checklist-col">
       <h3 class="checklist-title">What I bring</h3>
-      <ul class="checklist" id="checklist">
-        <li class="checklist-item" data-index="0"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Curious mind, fast learner<span class="strike-line"></span></span></li>
-        <li class="checklist-item" data-index="1"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Empathy for real users<span class="strike-line"></span></span></li>
-        <li class="checklist-item" data-index="2"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Attention to every detail<span class="strike-line"></span></span></li>
-        <li class="checklist-item" data-index="3"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Clear visual communication<span class="strike-line"></span></span></li>
-        <li class="checklist-item" data-index="4"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Autonomous and proactive contributor<span class="strike-line"></span></span></li>
-      </ul>
-      <div class="cta-connect" id="cta-connect">Let's connect →</div>
-      </div><!-- end about-checklist-col -->
-      <div class="about-illus-col">
+      <div style="display:flex;flex-direction:row;align-items:flex-end;gap:20px;">
+        <ul class="checklist" id="checklist">
+          <li class="checklist-item" data-index="0"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Curious mind, fast learner<span class="strike-line"></span></span></li>
+          <li class="checklist-item" data-index="1"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Empathy for real users<span class="strike-line"></span></span></li>
+          <li class="checklist-item" data-index="2"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Attention to every detail<span class="strike-line"></span></span></li>
+          <li class="checklist-item" data-index="3"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Clear visual communication<span class="strike-line"></span></span></li>
+          <li class="checklist-item" data-index="4"><div class="checkbox-wrap"><svg viewBox="0 0 20 20"><rect class="cb-box" x="2" y="2" width="16" height="16" rx="2"/><path class="cb-check" d="M4,4 L16,16 M16,4 L4,16"/></svg></div><span class="checklist-text">Autonomous and proactive contributor<span class="strike-line"></span></span></li>
+        </ul>
+        <div class="about-illus-col">
         <div class="illus-frame" id="illus-frame">
           <div id="il-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .4s;">
             <img src="https://raw.githubusercontent.com/camille-cong-perret/portfolio/main/point-interrogation.png" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:10px;">
