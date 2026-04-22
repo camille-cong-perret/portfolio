@@ -1858,7 +1858,7 @@ function openProject(idx) {
       <div class="detail-type">${p.type}</div>
       ${p.tool ? `<div class="detail-tool">${p.tool}</div>` : ''}
       <div class="detail-video"><video src="${p.video}" muted playsinline autoplay loop preload="metadata"></video></div>
-      ${p.link ? `<div class="detail-link-wrap" style="text-align:center;margin-bottom:40px;"><span style="font-family:var(--font-body);font-size:14px;color:var(--chalk);">explore the website → <a href="${p.link}" target="_blank" class="detail-link alinea-link">${p.link}</a></span></div>` : ''}
+      
       ${projectBodies[idx]}
       <div class="detail-nav">
         <button class="detail-nav-btn" onclick="openProject((${idx}+3)%4); projectDetail.scrollTop=0;">← Previous project</button>
